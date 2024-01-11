@@ -9,7 +9,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: Pr0duct0s12
     volumes:
-      - ./catalog-db/init-catalog.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./catalog-db/init-catalog.js:/docker-entrypoint-initdb.d/mongo-init.js
   mongo-express:
     image: mongo-express
     restart: always
@@ -19,5 +19,15 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: Pr0duct0s12
       ME_CONFIG_MONGODB_URL: mongodb://admin:Pr0duct0s12@db-catalog:27017/
+    depends_on:
+      - db-catalog
+  #catalog-ws:
+  #  image: catalog-ws
+  #  build:
+  #    dockerfile: ./Dockerfile
+  #  ports:
+  #    - 7000:7000
+  #  depends_on:
+  #    - db-catalog
 volumes:
   catalog:

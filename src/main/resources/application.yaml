@@ -1,6 +1,6 @@
 #logging.level.org.springframework.security.web.*=debug
 server:
-   port: 8080
+   port: 7000
    servlet:
       session:
          timeout: 21600s
@@ -10,6 +10,11 @@ spring:
       driverClassName: org.h2.Driver
       username: sa
       password: sa
+   data:
+      mongodb:
+         host: localhost
+         port: 27017
+         database: catalog
    jpa:
       database-platform: org.hibernate.dialect.H2Dialect
       defer-datasource-initialization: true
