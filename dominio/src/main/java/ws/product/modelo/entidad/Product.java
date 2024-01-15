@@ -1,14 +1,16 @@
 package ws.product.modelo.entidad;
 
+import lombok.extern.java.Log;
 import ws.brand.modelo.dto.BrandDTO;
 import ws.information.modelo.dto.InformationDTO;
 import ws.reference.modelo.dto.ReferenceDTO;
-import ws.reference.modelo.entidad.Reference;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Log
 public class Product {
+    private static final int FACTOR_NORMALIZAR_PESO = 100;
+    public static final int MAXIMO_TAMANO_SECCION_SKU = 4;
     private String id;
     private int code;
     private int tag;
@@ -16,10 +18,10 @@ public class Product {
     private BrandDTO brand;
     private String name;
     private InformationDTO information;
-    private List<Reference> references;
+    private List<ReferenceDTO> references;
 
     private Product(int code, int tag, int category, BrandDTO brand, String name, InformationDTO information,
-                    List<Reference> references) {
+                    List<ReferenceDTO> references) {
         this.code = code;
         this.tag = tag;
         this.category = category;
@@ -31,16 +33,8 @@ public class Product {
 
     public static Product crear(SolicitudCrearProducto solicitudCrearProducto, int code){
         //Validadores
-        List<Reference> references = new ArrayList<>();
-        solicitudCrearProducto.getReferences().forEach((ReferenceDTO reference)->{
-            String sku = Product.generarSKU(solicitudCrearProducto.getBrand().getName(), solicitudCrearProducto.getName(),
-                    code,reference);
-            references.add(Reference.crear(
-               reference.getPeso(), reference.getPrice(),
-               sku, reference.getStock()
-            ));
-        });
-
+        List<ReferenceDTO> references = agregarSKUaReferencias(solicitudCrearProducto.getReferences(),
+                solicitudCrearProducto.getBrand().getName(), solicitudCrearProducto.getName(), code);
         return new Product(code,
                 solicitudCrearProducto.getTag(),solicitudCrearProducto.getCategory(),
                 solicitudCrearProducto.getBrand(),solicitudCrearProducto.getName(),
@@ -48,12 +42,30 @@ public class Product {
         );
     }
 
+    private static List<ReferenceDTO> agregarSKUaReferencias(List<ReferenceDTO> referenciaInput, String brandName,
+                       String nameProduct, int code){
+        List<ReferenceDTO> references = new ArrayList<>();
+        referenciaInput.forEach((ReferenceDTO reference)->{
+            String sku = Product.generarSKU(brandName, nameProduct,code,reference);
+            //log.info("Precio de referencia "+reference.getPrecio());
+            references.add(new ReferenceDTO(
+                    reference.getPeso(), reference.getPrecio(),
+                    sku, reference.getStock()
+            ));
+        });
+        return references;
+    }
+
+
     private static String generarSKU(String brand, String name,
                                      int code, ReferenceDTO reference){
+        String pesoNormalizado = Long.toString((reference.getPeso()/FACTOR_NORMALIZAR_PESO)).toUpperCase();
+        String codeString = Integer.toString(code).toUpperCase();
         StringBuilder skuBuilder = new StringBuilder();
-        skuBuilder.append(name, 0, 4).append("-").append(brand,0,4).append("-");
-        skuBuilder.append(Long.toString(reference.getPeso()),0,4);
-        skuBuilder.append("-").append(code);
+        skuBuilder.append(name.toUpperCase(), 0, Math.min(name.length(), MAXIMO_TAMANO_SECCION_SKU)).append("-")
+                .append(brand.toUpperCase(),0,Math.min(brand.length(),MAXIMO_TAMANO_SECCION_SKU)).append("-");
+        skuBuilder.append(pesoNormalizado,0,Math.min(pesoNormalizado.length(),MAXIMO_TAMANO_SECCION_SKU));
+        skuBuilder.append("-").append(codeString, 0, Math.min(codeString.length(),MAXIMO_TAMANO_SECCION_SKU));
         return skuBuilder.toString();
     }
 
@@ -85,7 +97,7 @@ public class Product {
         return information;
     }
 
-    public List<Reference> getReferences() {
+    public List<ReferenceDTO> getReferences() {
         return references;
     }
 }

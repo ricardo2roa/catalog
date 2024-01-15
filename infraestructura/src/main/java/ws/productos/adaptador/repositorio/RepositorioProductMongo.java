@@ -8,6 +8,8 @@ import ws.product.modelo.dto.ProductDTO;
 import ws.product.modelo.entidad.Product;
 import ws.product.puerto.repositorio.RepositorioProduct;
 
+import java.util.List;
+
 @Repository
 @Log
 public class RepositorioProductMongo implements RepositorioProduct {
@@ -35,7 +37,11 @@ public class RepositorioProductMongo implements RepositorioProduct {
 
     @Override
     public int calcularCode() {
-        //log.info("codigo: "+(this.mongoTemplate.count(new Query(),"products") + 1));
         return (int)( this.mongoTemplate.count(new Query(),"products") + 1);
+    }
+
+    @Override
+    public List<ProductDTO> getProducts() {
+        return this.mongoTemplate.findAll(ProductDTO.class);
     }
 }

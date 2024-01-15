@@ -27,7 +27,7 @@ public class UserSecurityService implements UserDetailsService {
         UserDTO userDTO = this.servicioBuscarUserById.ejecutar(username);
         if(userDTO.getUsername().isEmpty()) throw new UsernameNotFoundException("User"+username+"not found");
 
-        log.info(userDTO.getRole().toString());
+        //log.info(userDTO.getRole().toString());
         return User.builder()
                 .username(userDTO.getUsername())
                 .password(userDTO.getPassword())

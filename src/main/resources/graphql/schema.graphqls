@@ -1,0 +1,50 @@
+type Product{
+    id:ID!
+    code:Int!
+    tag: Tag!
+    category: Category!
+    brand: Brand!
+    name: String!
+    information: Information!
+    references: [Reference]!
+}
+
+type Brand{
+    code: Int
+    name: String
+    locked: Boolean
+    disabled: Boolean
+    dateCreated: String
+}
+
+type Tag{
+    name: String
+    locked: Boolean
+    disabled: Boolean
+    dateCreated: String
+}
+
+type Category{
+    name: String
+    locked: Boolean
+    disabled: Boolean
+    dateCreated: String
+}
+
+type Information{
+    benefits: String
+    feature: String
+    description: String
+}
+
+type Reference{
+    peso: Int
+    precio: Int
+    sku: String
+    stock: Int
+}
+
+type Query{
+    allProducts:[Product]
+    findByFullName(fullName:String):Product
+}
