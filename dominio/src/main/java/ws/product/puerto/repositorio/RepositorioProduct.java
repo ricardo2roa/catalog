@@ -10,4 +10,5 @@ public interface RepositorioProduct{
     String guardar(Product product);
     int calcularCode();
     List<ProductDTO> getProducts();
+    List<ProductDTO> getProducts(String id);
 }

@@ -1,7 +1,9 @@
 package ws.productos.adaptador.repositorio;
 
 import lombok.extern.java.Log;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import ws.product.modelo.dto.ProductDTO;
@@ -42,6 +44,16 @@ public class RepositorioProductMongo implements RepositorioProduct {
 
     @Override
     public List<ProductDTO> getProducts() {
-        return this.mongoTemplate.findAll(ProductDTO.class);
+        Query query = new Query();
+        query.with(Sort.by(Sort.Order.asc("name")));
+        return this.mongoTemplate.find(query,ProductDTO.class);
+    }
+
+    @Override
+    public List<ProductDTO> getProducts(String id) {
+        Criteria criteria = Criteria.where("id").gt(id);
+        Query query = new Query(criteria);
+        query.with(Sort.by(Sort.Order.asc("name")));
+        return this.mongoTemplate.find(query,ProductDTO.class);
     }
 }

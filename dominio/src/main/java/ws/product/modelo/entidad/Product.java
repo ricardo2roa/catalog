@@ -31,6 +31,8 @@ public class Product {
         this.references = references;
     }
 
+    private Product(){}
+
     public static Product crear(SolicitudCrearProducto solicitudCrearProducto, int code){
         //Validadores
         List<ReferenceDTO> references = agregarSKUaReferencias(solicitudCrearProducto.getReferences(),
@@ -42,6 +44,9 @@ public class Product {
         );
     }
 
+    public static Product reconstruir(){
+        return new Product();
+    }
     private static List<ReferenceDTO> agregarSKUaReferencias(List<ReferenceDTO> referenciaInput, String brandName,
                        String nameProduct, int code){
         List<ReferenceDTO> references = new ArrayList<>();

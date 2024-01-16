@@ -15,4 +15,12 @@ public class ServicioBuscarProducto {
     public List<ProductDTO> buscarProductos(){
         return this.repositorioProduct.getProducts();
     }
+
+    public List<ProductDTO> buscarProductos(String id){
+        return this.repositorioProduct.getProducts(id);
+    }
+
+    public int count(){
+        return (this.repositorioProduct.calcularCode() - 1);
+    }
 }

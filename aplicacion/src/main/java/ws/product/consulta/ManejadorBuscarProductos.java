@@ -18,4 +18,8 @@ public class ManejadorBuscarProductos {
     public List<ProductDTO> ejecutar(){
         return this.servicioBuscarProducto.buscarProductos();
     }
+
+    public List<ProductDTO> ejecutar(String id){
+        return this.servicioBuscarProducto.buscarProductos(id);
+    }
 }

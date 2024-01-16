@@ -23,9 +23,9 @@ public class ComadoBuscarProductos {
         response.put("Hola","Hola");
         return response;
     }*/
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @SchemaMapping(typeName = "Query", value = "allProducts")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    /*@SchemaMapping(typeName = "Query", value = "allProducts")
     public List<ProductDTO> findAll(){
         return this.manejadorBuscarProductos.ejecutar();
-    }
+    }*/
 }

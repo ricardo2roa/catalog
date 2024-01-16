@@ -1,4 +1,19 @@
-type Product{
+type ProductConnection{
+    edges:[Edge]
+    pageInfo: PageInfo
+    totalCount: Int
+}
+type Edge{
+     cursor: String
+     node: Product
+}
+type PageInfo{
+    startCursor:String
+    endCursor:String
+    hasPreviousPage:Boolean
+    hasNextPage:Boolean
+}
+type Product2{
     id:ID!
     code:Int!
     tag: Tag!
@@ -7,6 +22,13 @@ type Product{
     name: String!
     information: Information!
     references: [Reference]!
+}
+
+type Product{
+    id:ID!
+    code:Int!
+    brand: Brand!
+    name: String!
 }
 
 type Brand{
@@ -45,6 +67,5 @@ type Reference{
 }
 
 type Query{
-    allProducts:[Product]
-    findByFullName(fullName:String):Product
+    allProducts(first:Int!, after:String):ProductConnection
 }
