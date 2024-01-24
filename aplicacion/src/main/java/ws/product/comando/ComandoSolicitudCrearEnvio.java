@@ -14,7 +14,7 @@ import java.util.List;
 public class ComandoSolicitudCrearEnvio {
     private int tag;
     private int category;
-    private BrandDTO brand;
+    private int brand;
     private String name;
     private InformationDTO information;
     private List<ReferenceDTO> references;

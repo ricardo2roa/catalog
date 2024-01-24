@@ -17,8 +17,19 @@ public class Brand {
         this.dateCreated = new Date();
     }
 
+    private Brand(int code, String name, Boolean locked, Boolean disabled, Date dateCreated){
+        this.code = code;
+        this.name = name;
+        this.locked = locked;
+        this.disabled = disabled;
+        this.dateCreated = dateCreated;
+    }
+
     public static Brand crear(int code, String name, Boolean locked, Boolean disabled){
         return new Brand(code,name,locked,disabled);
+    }
+    public static Brand recrear(int code, String name, Boolean locked, Boolean disabled,Date dateCreated){
+        return new Brand(code,name,locked,disabled,dateCreated);
     }
 
     public int getCode() {

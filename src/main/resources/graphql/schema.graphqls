@@ -13,24 +13,6 @@ type PageInfo{
     hasPreviousPage:Boolean
     hasNextPage:Boolean
 }
-type Product2{
-    id:ID!
-    code:Int!
-    tag: Tag!
-    category: Category!
-    brand: Brand!
-    name: String!
-    information: Information!
-    references: [Reference]!
-}
-
-type Product{
-    id:ID!
-    code:Int!
-    brand: Brand!
-    name: String!
-}
-
 type Brand{
     code: Int
     name: String
@@ -40,6 +22,7 @@ type Brand{
 }
 
 type Tag{
+    code: Int
     name: String
     locked: Boolean
     disabled: Boolean
@@ -47,6 +30,7 @@ type Tag{
 }
 
 type Category{
+    code: Int
     name: String
     locked: Boolean
     disabled: Boolean
@@ -65,7 +49,31 @@ type Reference{
     sku: String
     stock: Int
 }
+type Product{
+    id:ID!
+    code:Int!
+    tag:Tag!
+    brand:Brand!
+    category:Category!
+    name:String!
+    information:Information!
+    references:[Reference]!
+}
+
+type Product2{
+    id:ID!
+    code:Int!
+    brand: Brand!
+    name: String!
+}
+
+
 
 type Query{
     allProducts(first:Int!, after:String):ProductConnection
+    getProductById(id:String):Product
+}
+
+type Mutation{
+    uploadImage:Boolean
 }

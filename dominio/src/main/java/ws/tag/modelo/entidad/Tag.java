@@ -19,8 +19,19 @@ public class Tag {
         this.dateCreated = new Date();
     }
 
+    private Tag(int code, String name, Boolean locked, Boolean disabled,Date dateCreated){
+        this.code = code;
+        this.name = name;
+        this.locked = locked;
+        this.disabled = disabled;
+        this.dateCreated = dateCreated;
+    }
     public static Tag crear(int code, String name, Boolean locked, Boolean disabled){
         return new Tag(code,name,locked,disabled);
+    }
+
+    public static Tag recrear(int code, String name, Boolean locked, Boolean disabled, Date dateCreated){
+        return new Tag(code,name,locked,disabled,dateCreated);
     }
 
     public int getCode() {

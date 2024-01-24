@@ -1,5 +1,7 @@
 package ws.reference.modelo.entidad;
 
+import ws.reference.modelo.dto.ReferenceDTO;
+
 public class Reference {
     private long peso;
     private long precio;
@@ -15,6 +17,11 @@ public class Reference {
 
     public static Reference crear(long peso, long precio, String sku, int stock){
         return new Reference(peso,precio,sku,stock);
+    }
+
+    public static Reference crear(ReferenceDTO referenceDTO){
+        return new Reference(referenceDTO.getPeso(),referenceDTO.getPrecio(),
+                referenceDTO.getSku(),referenceDTO.getStock());
     }
 
     public long getPeso() {

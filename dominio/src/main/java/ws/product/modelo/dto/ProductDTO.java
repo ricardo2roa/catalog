@@ -18,12 +18,12 @@ public class ProductDTO {
     private int code;
     private int tag;
     private int category;
-    private BrandDTO brand;
+    private int brand;
     private String name;
     private InformationDTO information;
     private List<ReferenceDTO> references;
 
-    public ProductDTO(int code, int tag, int category, BrandDTO brand, String name,
+    public ProductDTO(int code, int tag, int category, int brand, String name,
                       InformationDTO information, List<ReferenceDTO> references){
         this.code = code;
         this.tag = tag;

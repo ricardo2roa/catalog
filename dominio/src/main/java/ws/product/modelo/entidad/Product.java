@@ -1,27 +1,51 @@
 package ws.product.modelo.entidad;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
-import ws.brand.modelo.dto.BrandDTO;
-import ws.information.modelo.dto.InformationDTO;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
+import ws.brand.modelo.entidad.Brand;
+import ws.category.modelo.entidad.Category;
+import ws.information.modelo.entidad.Information;
 import ws.reference.modelo.dto.ReferenceDTO;
+import ws.reference.modelo.entidad.Reference;
+import ws.tag.modelo.entidad.Tag;
 
-import java.util.ArrayList;
 import java.util.List;
-@Log
+@NoArgsConstructor
 public class Product {
     private static final int FACTOR_NORMALIZAR_PESO = 100;
     public static final int MAXIMO_TAMANO_SECCION_SKU = 4;
     private String id;
     private int code;
+
     private int tag;
     private int category;
-    private BrandDTO brand;
+    private int brand;
+    @Transient
+    private Tag fullTag;
+    @Transient
+    private Category fullCategory;
+    @Transient
+    private Brand fullBrand;
     private String name;
-    private InformationDTO information;
-    private List<ReferenceDTO> references;
+    private Information information;
+    private List<Reference> references;
 
-    private Product(int code, int tag, int category, BrandDTO brand, String name, InformationDTO information,
-                    List<ReferenceDTO> references) {
+    private Product(String id, int code, Tag fullTag, Category fullCategory, Brand fullBrand,
+                   String name, Information information, List<Reference> references) {
+        this.id = id;
+        this.code = code;
+        this.fullTag = fullTag;
+        this.fullCategory = fullCategory;
+        this.fullBrand = fullBrand;
+        this.name = name;
+        this.information = information;
+        this.references = references;
+    }
+
+    private Product(int code, int tag, int category, int brand, String name, Information information,
+                    List<Reference> references) {
         this.code = code;
         this.tag = tag;
         this.category = category;
@@ -30,45 +54,45 @@ public class Product {
         this.information = information;
         this.references = references;
     }
-
-    private Product(){}
-
-    public static Product crear(SolicitudCrearProducto solicitudCrearProducto, int code){
+    public static Product crear(SolicitudCrearProducto solicitudCrearProducto, int code, List<Reference> references){
         //Validadores
-        List<ReferenceDTO> references = agregarSKUaReferencias(solicitudCrearProducto.getReferences(),
-                solicitudCrearProducto.getBrand().getName(), solicitudCrearProducto.getName(), code);
+        /*List<ReferenceDTO> references = agregarSKUaReferencias(solicitudCrearProducto.getReferences(),
+                solicitudCrearProducto.getBrand(), solicitudCrearProducto.getName(), code);*/
         return new Product(code,
                 solicitudCrearProducto.getTag(),solicitudCrearProducto.getCategory(),
                 solicitudCrearProducto.getBrand(),solicitudCrearProducto.getName(),
-                solicitudCrearProducto.getInformation(), references
+                Information.crear(solicitudCrearProducto.getInformation()), references
         );
     }
 
-    public static Product reconstruir(){
-        return new Product();
+    public static Product recrear(String id, int code, Tag tag, Category category, Brand brand, String name, Information information,
+                                  List<Reference> references) {
+        //Validadores
+        return new Product(id,code, tag, category, brand, name, information, references);
     }
-    private static List<ReferenceDTO> agregarSKUaReferencias(List<ReferenceDTO> referenciaInput, String brandName,
+    public static List<Reference> agregarSKUaReferencias(List<ReferenceDTO> referenciaInput, String nameBrand,
                        String nameProduct, int code){
-        List<ReferenceDTO> references = new ArrayList<>();
+        /*List<ReferenceDTO> references = new ArrayList<>();
         referenciaInput.forEach((ReferenceDTO reference)->{
-            String sku = Product.generarSKU(brandName, nameProduct,code,reference);
+            String sku = Product.generarSKU(brand, nameProduct,code,reference);
             //log.info("Precio de referencia "+reference.getPrecio());
             references.add(new ReferenceDTO(
                     reference.getPeso(), reference.getPrecio(),
                     sku, reference.getStock()
             ));
-        });
-        return references;
+        });*/
+        return referenciaInput.stream().map(reference->Reference.crear(reference.getPeso(),reference.getPrecio(),
+                Product.generarSKU(nameBrand, nameProduct,code,reference),reference.getStock())).toList();
     }
 
 
     private static String generarSKU(String brand, String name,
                                      int code, ReferenceDTO reference){
-        String pesoNormalizado = Long.toString((reference.getPeso()/FACTOR_NORMALIZAR_PESO)).toUpperCase();
-        String codeString = Integer.toString(code).toUpperCase();
+        String pesoNormalizado = Long.toString((reference.getPeso()/FACTOR_NORMALIZAR_PESO)).replaceAll("\\s", "").toUpperCase();
+        String codeString = Integer.toString(code).replaceAll("\\s", "").toUpperCase();
         StringBuilder skuBuilder = new StringBuilder();
-        skuBuilder.append(name.toUpperCase(), 0, Math.min(name.length(), MAXIMO_TAMANO_SECCION_SKU)).append("-")
-                .append(brand.toUpperCase(),0,Math.min(brand.length(),MAXIMO_TAMANO_SECCION_SKU)).append("-");
+        skuBuilder.append(name.replaceAll("\\s", "").toUpperCase(), 0, Math.min(name.length(), MAXIMO_TAMANO_SECCION_SKU)).append("-")
+                .append(brand.replaceAll("\\s", "").toUpperCase(),0,Math.min(brand.length(),MAXIMO_TAMANO_SECCION_SKU)).append("-");
         skuBuilder.append(pesoNormalizado,0,Math.min(pesoNormalizado.length(),MAXIMO_TAMANO_SECCION_SKU));
         skuBuilder.append("-").append(codeString, 0, Math.min(codeString.length(),MAXIMO_TAMANO_SECCION_SKU));
         return skuBuilder.toString();
@@ -90,7 +114,7 @@ public class Product {
         return category;
     }
 
-    public BrandDTO getBrand() {
+    public int getBrand() {
         return brand;
     }
 
@@ -98,11 +122,23 @@ public class Product {
         return name;
     }
 
-    public InformationDTO getInformation() {
+    public Information getInformation() {
         return information;
     }
 
-    public List<ReferenceDTO> getReferences() {
+    public List<Reference> getReferences() {
         return references;
+    }
+
+    public Tag getFullTag() {
+        return fullTag;
+    }
+
+    public Category getFullCategory() {
+        return fullCategory;
+    }
+
+    public Brand getFullBrand() {
+        return fullBrand;
     }
 }

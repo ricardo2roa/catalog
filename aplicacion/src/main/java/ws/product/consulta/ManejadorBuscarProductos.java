@@ -2,6 +2,7 @@ package ws.product.consulta;
 
 import org.springframework.stereotype.Component;
 import ws.product.modelo.dto.ProductDTO;
+import ws.product.modelo.entidad.Product;
 import ws.product.servicios.ServicioBuscarProducto;
 import ws.product.servicios.ServicioCrearProducto;
 
@@ -15,11 +16,11 @@ public class ManejadorBuscarProductos {
         this.servicioBuscarProducto = servicioBuscarProducto;
     }
 
-    public List<ProductDTO> ejecutar(){
+    public List<Product> ejecutar(){
         return this.servicioBuscarProducto.buscarProductos();
     }
 
-    public List<ProductDTO> ejecutar(String id){
+    public List<Product> ejecutar(String id){
         return this.servicioBuscarProducto.buscarProductos(id);
     }
 }

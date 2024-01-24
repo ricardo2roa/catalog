@@ -3,11 +3,16 @@ package ws.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ws.brand.puerto.repositorio.RepositorioBrand;
+import ws.brand.servicios.ServicioBuscarBrand;
 import ws.brand.servicios.ServicioCrearBrand;
+import ws.category.puerto.repositorio.RepositorioCategory;
+import ws.category.servicios.ServicioConsultarCategory;
+import ws.category.servicios.ServicioCrearCategory;
 import ws.product.puerto.repositorio.RepositorioProduct;
 import ws.product.servicios.ServicioBuscarProducto;
 import ws.product.servicios.ServicioCrearProducto;
 import ws.tag.puerto.repositorio.RepositorioTag;
+import ws.tag.servicios.ServicioConsultarTag;
 import ws.tag.servicios.ServicioCrearTag;
 import ws.userSecurity.puerto.dao.UserDAO;
 import ws.userSecurity.servicios.ServicioBuscarUserById;
@@ -20,8 +25,8 @@ public class BeanServicio {
     }
 
     @Bean
-    public ServicioCrearProducto servicioCrearProducto(RepositorioProduct repositorioProduct){
-        return new ServicioCrearProducto(repositorioProduct);
+    public ServicioCrearProducto servicioCrearProducto(RepositorioProduct repositorioProduct, RepositorioBrand repositorioBrand){
+        return new ServicioCrearProducto(repositorioProduct, repositorioBrand);
     }
 
     @Bean
@@ -37,5 +42,25 @@ public class BeanServicio {
     @Bean
     public ServicioCrearTag servicioCrearTag(RepositorioTag repositoryTag){
         return new ServicioCrearTag(repositoryTag);
+    }
+
+    @Bean
+    public ServicioCrearCategory servicioCrearCategory(RepositorioCategory repositorioCategory){
+        return new ServicioCrearCategory(repositorioCategory);
+    }
+
+    @Bean
+    public ServicioBuscarBrand servicioBuscarBrand(RepositorioBrand repositorioBrand){
+        return new ServicioBuscarBrand(repositorioBrand);
+    }
+
+    @Bean
+    public ServicioConsultarCategory servicioConsultarCategory(RepositorioCategory repositorioCategory){
+        return new ServicioConsultarCategory(repositorioCategory);
+    }
+
+    @Bean
+    public ServicioConsultarTag servicioConsultarTag(RepositorioTag repositorioTag){
+        return new ServicioConsultarTag(repositorioTag);
     }
 }

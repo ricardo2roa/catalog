@@ -5,6 +5,7 @@ import graphql.relay.DefaultConnectionCursor;
 import graphql.relay.Edge;
 import org.springframework.stereotype.Component;
 import ws.product.modelo.dto.ProductDTO;
+import ws.product.modelo.entidad.Product;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -19,11 +20,11 @@ public class CursorUtil {
     public String decodeCursorWith(String id){
         return new String(Base64.getDecoder().decode(id));
     }
-    public <T> ConnectionCursor getFirstCursorFrom(List<Edge<ProductDTO>> edges){
+    public <T> ConnectionCursor getFirstCursorFrom(List<Edge<Product>> edges){
         return (edges.isEmpty() ? null : edges.get(0).getCursor());
     }
 
-    public <T> ConnectionCursor getLastCursorFrom(List<Edge<ProductDTO>> edges){
+    public <T> ConnectionCursor getLastCursorFrom(List<Edge<Product>> edges){
         return (edges.isEmpty() ? null : edges.get(edges.size() - 1).getCursor());
     }
 }

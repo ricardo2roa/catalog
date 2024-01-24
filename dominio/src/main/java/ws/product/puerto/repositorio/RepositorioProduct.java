@@ -9,6 +9,7 @@ import java.util.List;
 public interface RepositorioProduct{
     String guardar(Product product);
     int calcularCode();
-    List<ProductDTO> getProducts();
-    List<ProductDTO> getProducts(String id);
+    List<Product> getProducts();
+    List<Product> getProducts(String id);
+    Product getProduct(String id);
 }

@@ -24,16 +24,7 @@ public class RepositorioProductMongo implements RepositorioProduct {
 
     @Override
     public String guardar(Product product) {
-
-        ProductDTO productSave = this.mongoTemplate.save(new ProductDTO(
-                product.getCode(),
-                product.getTag(),
-                product.getCategory(),
-                product.getBrand(),
-                product.getName(),
-                product.getInformation(),
-                product.getReferences()
-        ));
+        Product productSave = this.mongoTemplate.save(product,"products");
         return productSave.getId();
     }
 
@@ -43,17 +34,24 @@ public class RepositorioProductMongo implements RepositorioProduct {
     }
 
     @Override
-    public List<ProductDTO> getProducts() {
+    public List<Product> getProducts() {
         Query query = new Query();
         query.with(Sort.by(Sort.Order.asc("name")));
-        return this.mongoTemplate.find(query,ProductDTO.class);
+        return this.mongoTemplate.find(query, Product.class,"products");
     }
 
     @Override
-    public List<ProductDTO> getProducts(String id) {
+    public List<Product> getProducts(String id) {
         Criteria criteria = Criteria.where("id").gt(id);
         Query query = new Query(criteria);
         query.with(Sort.by(Sort.Order.asc("name")));
-        return this.mongoTemplate.find(query,ProductDTO.class);
+        return this.mongoTemplate.find(query,Product.class,"products");
+    }
+
+    @Override
+    public Product getProduct(String id) {
+        Criteria criteria = Criteria.where("id").is(id);
+        Query query = new Query(criteria);
+        return this.mongoTemplate.findOne(query,Product.class,"products");
     }
 }

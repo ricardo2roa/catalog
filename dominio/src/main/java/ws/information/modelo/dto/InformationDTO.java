@@ -1,8 +1,10 @@
 package ws.information.modelo.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class InformationDTO {
     private String benefits;
     private String feature;
