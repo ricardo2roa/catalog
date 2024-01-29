@@ -34,14 +34,14 @@ public class CustomGraphQLContextBuilder implements GraphQLServletContextBuilder
         context.put("HttpServletResponse",httpServletResponse);
         context.put("token",token);
 
-        try {
+        /*try {
             Collection<Part> prueba = httpServletRequest.getParts();
             context.put("parts",prueba);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ServletException e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
         return GraphQLKickstartContext.of(this.dataLoaderRegistryFactory.create(),context);
         //return GraphQLKickstartContext.of(context);

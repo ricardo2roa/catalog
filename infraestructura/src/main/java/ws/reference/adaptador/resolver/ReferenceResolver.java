@@ -1,4 +1,4 @@
-package ws.reference.resolver;
+package ws.reference.adaptador.resolver;
 
 import graphql.kickstart.tools.GraphQLResolver;
 import org.springframework.stereotype.Component;

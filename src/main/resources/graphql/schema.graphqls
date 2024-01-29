@@ -60,20 +60,7 @@ type Product{
     references:[Reference]!
 }
 
-type Product2{
-    id:ID!
-    code:Int!
-    brand: Brand!
-    name: String!
-}
-
-
-
 type Query{
     allProducts(first:Int!, after:String):ProductConnection
     getProductById(id:String):Product
-}
-
-type Mutation{
-    uploadImage:Boolean
 }

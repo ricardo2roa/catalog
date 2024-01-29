@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import ws.brand.modelo.entidad.Brand;
 import ws.category.modelo.entidad.Category;
+import ws.exception.validador.ValidarDatos;
 import ws.information.modelo.entidad.Information;
 import ws.reference.modelo.dto.ReferenceDTO;
 import ws.reference.modelo.entidad.Reference;
@@ -13,6 +14,7 @@ import ws.tag.modelo.entidad.Tag;
 
 import java.util.List;
 @NoArgsConstructor
+@Log
 public class Product {
     private static final int FACTOR_NORMALIZAR_PESO = 100;
     public static final int MAXIMO_TAMANO_SECCION_SKU = 4;
@@ -58,6 +60,13 @@ public class Product {
         //Validadores
         /*List<ReferenceDTO> references = agregarSKUaReferencias(solicitudCrearProducto.getReferences(),
                 solicitudCrearProducto.getBrand(), solicitudCrearProducto.getName(), code);*/
+        log.info(("Hola prueba"+code));
+        ValidarDatos.siEsMayoraCero("codigo de producto",code);
+        ValidarDatos.siEsMayoraCero("codigo de Etiqueta",solicitudCrearProducto.getTag());
+        ValidarDatos.siEsMayoraCero("codigo de Categoria",solicitudCrearProducto.getCategory());
+        ValidarDatos.siEsMayoraCero("codigo de Marca",solicitudCrearProducto.getBrand());
+        ValidarDatos.siEsVacioONull("nombre de producto",solicitudCrearProducto.getName());
+
         return new Product(code,
                 solicitudCrearProducto.getTag(),solicitudCrearProducto.getCategory(),
                 solicitudCrearProducto.getBrand(),solicitudCrearProducto.getName(),
@@ -81,8 +90,19 @@ public class Product {
                     sku, reference.getStock()
             ));
         });*/
-        return referenciaInput.stream().map(reference->Reference.crear(reference.getPeso(),reference.getPrecio(),
-                Product.generarSKU(nameBrand, nameProduct,code,reference),reference.getStock())).toList();
+        ValidarDatos.siEsVacioONull("nombre de producto",nameProduct);
+        log.info(("Hola se activo 2"+code));
+        ValidarDatos.siEsMayoraCero("codigo de producto 1",code);
+        ValidarDatos.siEsVacioONull("nombre de marca",nameProduct);
+
+        return referenciaInput.stream().map(reference->{
+            ValidarDatos.siEsMayoraCero("peso de producto",reference.getPeso());
+            ValidarDatos.siEsMayoraCero("precio de producto",reference.getPrecio());
+            ValidarDatos.siEsMayoraCero("stock de producto",reference.getStock());
+            ValidarDatos.siEsNull("referencia de producto",reference);
+            return Reference.crear(reference.getPeso(),reference.getPrecio(),
+                Product.generarSKU(nameBrand, nameProduct,code,reference),reference.getStock());
+        }).toList();
     }
 
 

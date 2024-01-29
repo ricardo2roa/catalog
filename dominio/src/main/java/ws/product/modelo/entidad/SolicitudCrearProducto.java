@@ -2,6 +2,7 @@ package ws.product.modelo.entidad;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import ws.brand.modelo.dto.BrandDTO;
 import ws.information.modelo.dto.InformationDTO;
 import ws.reference.modelo.dto.ReferenceDTO;

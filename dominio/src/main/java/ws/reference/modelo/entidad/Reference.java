@@ -3,10 +3,19 @@ package ws.reference.modelo.entidad;
 import ws.reference.modelo.dto.ReferenceDTO;
 
 public class Reference {
+    private String id;
     private long peso;
     private long precio;
     private String sku;
     private int stock;
+
+    private Reference(String id, long peso, long precio, String sku, int stock){
+        this.id = id;
+        this.peso = peso;
+        this.precio = precio;
+        this.sku = sku;
+        this.stock = stock;
+    }
 
     private Reference(long peso, long precio, String sku, int stock){
         this.peso = peso;
@@ -24,11 +33,17 @@ public class Reference {
                 referenceDTO.getSku(),referenceDTO.getStock());
     }
 
+    public static Reference recrear(String id,long peso, long precio, String sku, int stock){
+        return new Reference(id,peso,precio,sku,stock);
+    }
+
+    public String getId(){return id;}
+
     public long getPeso() {
         return peso;
     }
 
-    public float getPrecio() {
+    public long getPrecio() {
         return precio;
     }
 
