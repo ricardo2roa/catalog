@@ -60,17 +60,17 @@ public class Product {
         this.information = information;
         this.references = references;
     }
-    public static Product crear(SolicitudCrearProducto solicitudCrearProducto, int code, List<String> references){
+    public static Product crear(SolicitudProducto solicitudProducto, int code, List<String> references){
         //Validadores
         ValidarDatos.siEsMayoraCero("codigo de producto",code);
-        Product.validarCampos(solicitudCrearProducto);
+        Product.validarCampos(solicitudProducto);
         references.spliterator().forEachRemaining(id->ValidarDatos.
                 siEsVacioONull("id de referencia",id));
 
         return new Product(code,
-                solicitudCrearProducto.getTag(),solicitudCrearProducto.getCategory(),
-                solicitudCrearProducto.getBrand(),solicitudCrearProducto.getName(),
-                Information.crear(solicitudCrearProducto.getInformation()), references
+                solicitudProducto.getTag(),solicitudProducto.getCategory(),
+                solicitudProducto.getBrand(),solicitudProducto.getName(),
+                Information.crear(solicitudProducto.getInformation()), references
         );
     }
 
@@ -80,20 +80,20 @@ public class Product {
         return new Product(id,code, tag, category, brand, name, information, references);
     }
 
-    public static void validarCampos(SolicitudCrearProducto solicitudCrearProducto){
-        ValidarDatos.siEsMayoraCero("codigo de etiqueta", solicitudCrearProducto.getTag());
-        ValidarDatos.siEsMayoraCero("codigo de categoria", solicitudCrearProducto.getCategory());
-        ValidarDatos.siEsMayoraCero("codigo de marca", solicitudCrearProducto.getBrand());
-        ValidarDatos.siEsVacioONull("nombre de producto", solicitudCrearProducto.getName());
+    public static void validarCampos(SolicitudProducto solicitudProducto){
+        ValidarDatos.siEsMayoraCero("codigo de etiqueta", solicitudProducto.getTag());
+        ValidarDatos.siEsMayoraCero("codigo de categoria", solicitudProducto.getCategory());
+        ValidarDatos.siEsMayoraCero("codigo de marca", solicitudProducto.getBrand());
+        ValidarDatos.siEsVacioONull("nombre de producto", solicitudProducto.getName());
         ValidarDatos.siEsVacioONull("beneficios de producto",
-                solicitudCrearProducto.getInformation().getBenefits());
+                solicitudProducto.getInformation().getBenefits());
         ValidarDatos.siEsVacioONull("característica de producto",
-                solicitudCrearProducto.getInformation().getFeature());
+                solicitudProducto.getInformation().getFeature());
         ValidarDatos.siEsVacioONull("descripción de producto",
-                solicitudCrearProducto.getInformation().getDescription());
+                solicitudProducto.getInformation().getDescription());
     }
 
-    public static void validarReferenciasDTO(List<ReferenceDTO> references){
+    public static void validarReferencias(List<SolicitudReferencia> references){
         ValidarDatos.siListaEsNull("references",references);
         int[] cont = {1};
         references.spliterator()
@@ -117,7 +117,7 @@ public class Product {
                 });
     }
 
-    public static List<Reference> agregarSKUaReferencias(List<ReferenceDTO> referenciaInput, String nameBrand,
+    public static List<Reference> agregarSKUaReferencias(List<SolicitudReferencia> referenciaInput, String nameBrand,
                        String nameProduct, int code){
 
         ValidarDatos.siEsVacioONull("nombre de producto",nameProduct);
@@ -125,18 +125,19 @@ public class Product {
         ValidarDatos.siEsVacioONull("nombre de marca",nameProduct);
 
         return referenciaInput.stream().map(reference->{
+            ValidarDatos.siEsNull("referencia de producto",reference);
             ValidarDatos.siEsMayoraCero("peso de producto",reference.getPeso());
             ValidarDatos.siEsMayoraCero("precio de producto",reference.getPrecio());
             ValidarDatos.siEsMayoraCero("stock de producto",reference.getStock());
-            ValidarDatos.siEsNull("referencia de producto",reference);
+
             return Reference.crear(reference.getPeso(),reference.getPrecio(),
-                Product.generarSKU(nameBrand, nameProduct,code,reference),reference.getStock());
+                Product.generarSKU(nameBrand, nameProduct,code,reference),reference.getStock(), reference.getCodeImg());
         }).toList();
     }
 
 
     private static String generarSKU(String brand, String name,
-                                     int code, ReferenceDTO reference){
+                                     int code, SolicitudReferencia reference){
         String pesoNormalizado = Long.toString((reference.getPeso()/FACTOR_NORMALIZAR_PESO)).replaceAll("\\s", "").toUpperCase();
         String codeString = Integer.toString(code).replaceAll("\\s", "").toUpperCase();
         StringBuilder skuBuilder = new StringBuilder();

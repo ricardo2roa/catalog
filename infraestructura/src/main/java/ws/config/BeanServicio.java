@@ -2,6 +2,8 @@ package ws.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ws.UploadFiles.config.PropiedadesAlmacenamiento;
+import ws.UploadFiles.servicios.ImageSystemStorageService;
 import ws.brand.puerto.repositorio.RepositorioBrand;
 import ws.brand.servicios.ServicioBuscarBrand;
 import ws.brand.servicios.ServicioCrearBrand;
@@ -28,8 +30,8 @@ public class BeanServicio {
 
     @Bean
     public ServicioCrearProducto servicioCrearProducto(RepositorioProduct repositorioProduct,
-                          RepositorioBrand repositorioBrand, RepositorioReference repositorioReference){
-        return new ServicioCrearProducto(repositorioProduct, repositorioBrand, repositorioReference);
+                          RepositorioBrand repositorioBrand, RepositorioReference repositorioReference, ImageSystemStorageService serviceImageStorage){
+        return new ServicioCrearProducto(repositorioProduct, repositorioBrand, repositorioReference, serviceImageStorage);
     }
 
     @Bean
@@ -70,5 +72,10 @@ public class BeanServicio {
     @Bean
     public ServicioObtenerReferencia servicioCrearReferencia(RepositorioReference repositorioReference){
         return new ServicioObtenerReferencia(repositorioReference);
+    }
+
+    @Bean
+    public ImageSystemStorageService imageSystemStorageService(PropiedadesAlmacenamiento propiedadesAlmacenamiento){
+        return new ImageSystemStorageService(propiedadesAlmacenamiento);
     }
 }

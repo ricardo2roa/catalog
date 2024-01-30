@@ -1,13 +1,17 @@
 package ws.productos.controlador;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.boot.json.JsonParser;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import ws.product.comando.ComandoProducto;
 import ws.product.comando.ComandoSolicitudCrearEnvio;
 import ws.product.comando.manejador.ManejadorCrearProductos;
+import ws.productos.adaptador.resolver.errorHTTP.exception.ErrorHTTPException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -20,10 +24,17 @@ public class ComandoCrearProducto {
     }
 
     @PostMapping("/crear")
-    public Map<String,String> crear(@RequestBody ComandoSolicitudCrearEnvio comandoSolicitudCrearEnvio){
-        String id = this.manejadorCrearProductos.ejecutar(comandoSolicitudCrearEnvio);
-        Map<String,String> response = new HashMap<>();
-        response.put("id",id);
-        return response;
+    public Map<String,String> crear(@RequestParam("files") List<MultipartFile> files,
+                                    @RequestParam("product")String json){
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            var producto = objectMapper.readValue(json,ComandoProducto.class);
+            String id = this.manejadorCrearProductos.ejecutar(new ComandoSolicitudCrearEnvio(producto,files));
+            Map<String,String> response = new HashMap<>();
+            response.put("id",id);
+            return response;
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

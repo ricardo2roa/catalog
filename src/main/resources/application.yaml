@@ -30,3 +30,5 @@ logging:
    level:
       org.springframework.security.web: debug
       org.springframework.graphql: DEBUG
+storage:
+   location: D:\web-services\img
