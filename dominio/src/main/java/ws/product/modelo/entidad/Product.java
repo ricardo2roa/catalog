@@ -13,6 +13,8 @@ import ws.reference.modelo.entidad.Reference;
 import ws.tag.modelo.entidad.Tag;
 
 import java.util.List;
+import java.util.Set;
+
 @NoArgsConstructor
 @Log
 public class Product {
@@ -32,10 +34,12 @@ public class Product {
     private Brand fullBrand;
     private String name;
     private Information information;
-    private List<Reference> references;
+    private List<String> references;
+    @Transient
+    private List<Reference> fullreferences;
 
     private Product(String id, int code, Tag fullTag, Category fullCategory, Brand fullBrand,
-                   String name, Information information, List<Reference> references) {
+                   String name, Information information, List<String> references) {
         this.id = id;
         this.code = code;
         this.fullTag = fullTag;
@@ -47,7 +51,7 @@ public class Product {
     }
 
     private Product(int code, int tag, int category, int brand, String name, Information information,
-                    List<Reference> references) {
+                    List<String> references) {
         this.code = code;
         this.tag = tag;
         this.category = category;
@@ -56,16 +60,12 @@ public class Product {
         this.information = information;
         this.references = references;
     }
-    public static Product crear(SolicitudCrearProducto solicitudCrearProducto, int code, List<Reference> references){
+    public static Product crear(SolicitudCrearProducto solicitudCrearProducto, int code, List<String> references){
         //Validadores
-        /*List<ReferenceDTO> references = agregarSKUaReferencias(solicitudCrearProducto.getReferences(),
-                solicitudCrearProducto.getBrand(), solicitudCrearProducto.getName(), code);*/
-        log.info(("Hola prueba"+code));
         ValidarDatos.siEsMayoraCero("codigo de producto",code);
-        ValidarDatos.siEsMayoraCero("codigo de Etiqueta",solicitudCrearProducto.getTag());
-        ValidarDatos.siEsMayoraCero("codigo de Categoria",solicitudCrearProducto.getCategory());
-        ValidarDatos.siEsMayoraCero("codigo de Marca",solicitudCrearProducto.getBrand());
-        ValidarDatos.siEsVacioONull("nombre de producto",solicitudCrearProducto.getName());
+        Product.validarCampos(solicitudCrearProducto);
+        references.spliterator().forEachRemaining(id->ValidarDatos.
+                siEsVacioONull("id de referencia",id));
 
         return new Product(code,
                 solicitudCrearProducto.getTag(),solicitudCrearProducto.getCategory(),
@@ -75,23 +75,52 @@ public class Product {
     }
 
     public static Product recrear(String id, int code, Tag tag, Category category, Brand brand, String name, Information information,
-                                  List<Reference> references) {
+                                  List<String> references) {
         //Validadores
         return new Product(id,code, tag, category, brand, name, information, references);
     }
+
+    public static void validarCampos(SolicitudCrearProducto solicitudCrearProducto){
+        ValidarDatos.siEsMayoraCero("codigo de etiqueta", solicitudCrearProducto.getTag());
+        ValidarDatos.siEsMayoraCero("codigo de categoria", solicitudCrearProducto.getCategory());
+        ValidarDatos.siEsMayoraCero("codigo de marca", solicitudCrearProducto.getBrand());
+        ValidarDatos.siEsVacioONull("nombre de producto", solicitudCrearProducto.getName());
+        ValidarDatos.siEsVacioONull("beneficios de producto",
+                solicitudCrearProducto.getInformation().getBenefits());
+        ValidarDatos.siEsVacioONull("característica de producto",
+                solicitudCrearProducto.getInformation().getFeature());
+        ValidarDatos.siEsVacioONull("descripción de producto",
+                solicitudCrearProducto.getInformation().getDescription());
+    }
+
+    public static void validarReferenciasDTO(List<ReferenceDTO> references){
+        ValidarDatos.siListaEsNull("references",references);
+        int[] cont = {1};
+        references.spliterator()
+                .forEachRemaining(field-> {
+                    ValidarDatos.siEsMayoraCero(("peso referencia "+cont[0]), field.getPeso());
+                    ValidarDatos.siEsMayoraCero(("precio referencia "+cont[0]), field.getPrecio());
+                    ValidarDatos.siEsMayoraCero(("stock referencia "+cont[0]), field.getStock());
+                    cont[0]++;
+                });
+    }
+
+    public static void validarFullReferencias(List<Reference> references){
+        ValidarDatos.siListaEsNull("references",references);
+        int[] cont = {1};
+        references.spliterator()
+                .forEachRemaining(field-> {
+                    ValidarDatos.siEsMayoraCero(("peso referencia "+cont[0]), field.getPeso());
+                    ValidarDatos.siEsMayoraCero(("precio referencia "+cont[0]), field.getPrecio());
+                    ValidarDatos.siEsMayoraCero(("stock referencia "+cont[0]), field.getStock());
+                    cont[0]++;
+                });
+    }
+
     public static List<Reference> agregarSKUaReferencias(List<ReferenceDTO> referenciaInput, String nameBrand,
                        String nameProduct, int code){
-        /*List<ReferenceDTO> references = new ArrayList<>();
-        referenciaInput.forEach((ReferenceDTO reference)->{
-            String sku = Product.generarSKU(brand, nameProduct,code,reference);
-            //log.info("Precio de referencia "+reference.getPrecio());
-            references.add(new ReferenceDTO(
-                    reference.getPeso(), reference.getPrecio(),
-                    sku, reference.getStock()
-            ));
-        });*/
+
         ValidarDatos.siEsVacioONull("nombre de producto",nameProduct);
-        log.info(("Hola se activo 2"+code));
         ValidarDatos.siEsMayoraCero("codigo de producto 1",code);
         ValidarDatos.siEsVacioONull("nombre de marca",nameProduct);
 
@@ -146,8 +175,12 @@ public class Product {
         return information;
     }
 
-    public List<Reference> getReferences() {
+    public List<String> getReferences() {
         return references;
+    }
+
+    public List<Reference> getFullReferences() {
+        return fullreferences;
     }
 
     public Tag getFullTag() {

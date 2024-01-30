@@ -1,7 +1,13 @@
 package ws.reference.puerto.repositorio;
 
+import ws.reference.modelo.dto.ReferenceDTO;
 import ws.reference.modelo.entidad.Reference;
 
+import java.util.List;
+
 public interface RepositorioReference {
-    String guardar(Reference reference);
+    Reference buscarPorId(String id);
+
+    String guardar(ReferenceDTO reference);
+
 }

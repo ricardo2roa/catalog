@@ -8,6 +8,8 @@ import ws.brand.modelo.dto.BrandDTO;
 import ws.brand.servicios.ServicioBuscarBrand;
 import ws.category.modelo.dto.CategoryDTO;
 import ws.category.servicios.ServicioConsultarCategory;
+import ws.reference.modelo.dto.ReferenceDTO;
+import ws.reference.servicios.ServicioObtenerReferencia;
 import ws.tag.modelo.dto.TagDTO;
 import ws.tag.servicios.ServicioConsultarTag;
 
@@ -27,6 +29,7 @@ public class DataLoaderRegistryFactory {
     private final ServicioConsultarCategory servicioConsultarCategory;
 
     private final ServicioConsultarTag servicioConsultarTag;
+
     private static final Executor brandThreadPool = Executors
             .newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     private static final Executor CategoryThreadPool = Executors
@@ -35,7 +38,9 @@ public class DataLoaderRegistryFactory {
     private static final Executor TagThreadPool = Executors
             .newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-    public DataLoaderRegistryFactory(ServicioBuscarBrand servicioBuscarBrand, ServicioConsultarCategory servicioConsultarCategory, ServicioConsultarTag servicioConsultarTag) {
+    public DataLoaderRegistryFactory(ServicioBuscarBrand servicioBuscarBrand,
+                                     ServicioConsultarCategory servicioConsultarCategory,
+                                     ServicioConsultarTag servicioConsultarTag) {
         this.servicioBuscarBrand = servicioBuscarBrand;
         this.servicioConsultarCategory = servicioConsultarCategory;
         this.servicioConsultarTag = servicioConsultarTag;
@@ -63,4 +68,5 @@ public class DataLoaderRegistryFactory {
         return DataLoaderFactory.newMappedDataLoader((Set<Integer>tagCodes) ->
                 CompletableFuture.supplyAsync(() -> this.servicioConsultarTag.getTagsFor(tagCodes),TagThreadPool));
     }
+
 }

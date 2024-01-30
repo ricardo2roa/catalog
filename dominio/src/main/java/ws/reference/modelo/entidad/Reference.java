@@ -1,5 +1,6 @@
 package ws.reference.modelo.entidad;
 
+import ws.exception.validador.ValidarDatos;
 import ws.reference.modelo.dto.ReferenceDTO;
 
 public class Reference {
@@ -35,6 +36,12 @@ public class Reference {
 
     public static Reference recrear(String id,long peso, long precio, String sku, int stock){
         return new Reference(id,peso,precio,sku,stock);
+    }
+
+    public static Reference recrear(ReferenceDTO referenceDTO){
+        ValidarDatos.siEsNullFindDB("referencia de db",referenceDTO);
+        return new Reference(referenceDTO.getId(),referenceDTO.getPeso(),referenceDTO.getPrecio(),
+                referenceDTO.getSku(),referenceDTO.getStock());
     }
 
     public String getId(){return id;}

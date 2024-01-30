@@ -11,6 +11,8 @@ import ws.category.servicios.ServicioCrearCategory;
 import ws.product.puerto.repositorio.RepositorioProduct;
 import ws.product.servicios.ServicioBuscarProducto;
 import ws.product.servicios.ServicioCrearProducto;
+import ws.reference.puerto.repositorio.RepositorioReference;
+import ws.reference.servicios.ServicioObtenerReferencia;
 import ws.tag.puerto.repositorio.RepositorioTag;
 import ws.tag.servicios.ServicioConsultarTag;
 import ws.tag.servicios.ServicioCrearTag;
@@ -25,8 +27,9 @@ public class BeanServicio {
     }
 
     @Bean
-    public ServicioCrearProducto servicioCrearProducto(RepositorioProduct repositorioProduct, RepositorioBrand repositorioBrand){
-        return new ServicioCrearProducto(repositorioProduct, repositorioBrand);
+    public ServicioCrearProducto servicioCrearProducto(RepositorioProduct repositorioProduct,
+                          RepositorioBrand repositorioBrand, RepositorioReference repositorioReference){
+        return new ServicioCrearProducto(repositorioProduct, repositorioBrand, repositorioReference);
     }
 
     @Bean
@@ -62,5 +65,10 @@ public class BeanServicio {
     @Bean
     public ServicioConsultarTag servicioConsultarTag(RepositorioTag repositorioTag){
         return new ServicioConsultarTag(repositorioTag);
+    }
+
+    @Bean
+    public ServicioObtenerReferencia servicioCrearReferencia(RepositorioReference repositorioReference){
+        return new ServicioObtenerReferencia(repositorioReference);
     }
 }
