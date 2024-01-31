@@ -7,9 +7,12 @@ import ws.product.modelo.entidad.Product;
 import ws.product.modelo.entidad.SolicitudCrearProducto;
 import ws.product.modelo.entidad.SolicitudProducto;
 import ws.product.puerto.repositorio.RepositorioProduct;
+import ws.reference.modelo.dto.ImageReferenceInfoDTO;
 import ws.reference.modelo.dto.ReferenceDTO;
 import ws.reference.modelo.entidad.Reference;
+import ws.reference.puerto.repositorio.RepositorioImageReference;
 import ws.reference.puerto.repositorio.RepositorioReference;
+import static ws.reference.modelo.entidad.ImageReferenceInfo.crear;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +22,13 @@ public class ServicioCrearProducto {
     private final RepositorioBrand repositorioBrand;
     private final RepositorioReference repositorioReference;
 
+    private final RepositorioImageReference repositorioImageReference;
     private final ImageSystemStorageService serviceImageStorage;
-    public ServicioCrearProducto(RepositorioProduct repositorioProduct, RepositorioBrand repositorioBrand, RepositorioReference repositorioReference, ImageSystemStorageService serviceImageStorage) {
+    public ServicioCrearProducto(RepositorioProduct repositorioProduct, RepositorioBrand repositorioBrand, RepositorioReference repositorioReference, RepositorioImageReference repositorioImageReference, ImageSystemStorageService serviceImageStorage) {
         this.repositorioProduct = repositorioProduct;
         this.repositorioBrand = repositorioBrand;
         this.repositorioReference = repositorioReference;
+        this.repositorioImageReference = repositorioImageReference;
         this.serviceImageStorage = serviceImageStorage;
     }
 
@@ -43,9 +48,10 @@ public class ServicioCrearProducto {
             var imagesReference = solicitudCrearProducto.getImageReference();
             String id = this.repositorioReference.guardar(ReferenceDTO.convertir(reference));
             referenceIds.add(id);
-            this.serviceImageStorage.store(imagesReference.stream()
+            String fileName = this.serviceImageStorage.store(imagesReference.stream()
                     .filter(file-> reference.getCodeImg().equals(file.getOriginalFilename().split("\\.")[0]))
                     .findFirst().get(),reference.getSku());
+            this.repositorioImageReference.registrarImagen(crear(fileName,id));
         });
 
         Product product = Product.crear(producto,code,referenceIds);

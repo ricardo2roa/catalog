@@ -5,11 +5,9 @@ import ws.UploadFiles.servicios.ImageSystemStorageService;
 import ws.reference.puerto.repositorio.RepositorioImageReference;
 
 public class ServicioUploadImageOfReference {
-    private final RepositorioImageReference repositorioImageReference;
     private final ImageSystemStorageService servicioUploadImage;
 
-    public ServicioUploadImageOfReference(RepositorioImageReference repositorioImageReference, ImageSystemStorageService servicioUploadImage) {
-        this.repositorioImageReference = repositorioImageReference;
+    public ServicioUploadImageOfReference(ImageSystemStorageService servicioUploadImage) {
         this.servicioUploadImage = servicioUploadImage;
     }
 

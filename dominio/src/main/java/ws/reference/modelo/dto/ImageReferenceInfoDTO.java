@@ -11,12 +11,11 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 @Document("imagesReference")
-public class ImageReferenceInfo {
+public class ImageReferenceInfoDTO {
     @MongoId
     @Field("_id")
     private String  id;
-    private String  name;
     private String  idReference;
-    private String  path;
+    private String  name;
     private Date    dateModify;
 }

@@ -55,7 +55,7 @@ public class JWTFilter extends OncePerRequestFilter {
 
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        log.info("Hola token: "+authenticationToken);
+        //log.info("Hola token: "+authenticationToken);
         filterChain.doFilter(request,response);
     }
 }

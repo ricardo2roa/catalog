@@ -13,6 +13,7 @@ import ws.category.servicios.ServicioCrearCategory;
 import ws.product.puerto.repositorio.RepositorioProduct;
 import ws.product.servicios.ServicioBuscarProducto;
 import ws.product.servicios.ServicioCrearProducto;
+import ws.reference.puerto.repositorio.RepositorioImageReference;
 import ws.reference.puerto.repositorio.RepositorioReference;
 import ws.reference.servicios.ServicioObtenerReferencia;
 import ws.tag.puerto.repositorio.RepositorioTag;
@@ -30,8 +31,9 @@ public class BeanServicio {
 
     @Bean
     public ServicioCrearProducto servicioCrearProducto(RepositorioProduct repositorioProduct,
-                          RepositorioBrand repositorioBrand, RepositorioReference repositorioReference, ImageSystemStorageService serviceImageStorage){
-        return new ServicioCrearProducto(repositorioProduct, repositorioBrand, repositorioReference, serviceImageStorage);
+              RepositorioBrand repositorioBrand, RepositorioReference repositorioReference,
+              ImageSystemStorageService serviceImageStorage, RepositorioImageReference repositorioImageReference){
+        return new ServicioCrearProducto(repositorioProduct, repositorioBrand, repositorioReference, repositorioImageReference, serviceImageStorage);
     }
 
     @Bean
