@@ -9,9 +9,7 @@ spring:
       password: sa
    data:
       mongodb:
-         host: db-catalog
-         port: 27017
-         database: catalog
+         uri: mongodb://admin:Pr0duct0s12@db-catalog:27017/catalog
    jpa:
       database-platform: org.hibernate.dialect.H2Dialect
       defer-datasource-initialization: true
