@@ -11,6 +11,7 @@ services:
     volumes:
       - mongo-data:/data/db
   catalog-ws:
+    image: catalog-ws
     build:
       dockerfile: ./Dockerfile
     ports:
