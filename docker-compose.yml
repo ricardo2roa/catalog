@@ -12,7 +12,8 @@ services:
       - mongo-data:/data/db
   catalog-ws:
     build:
-      dockerfile: ./Dockerfile
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 8080:7000
     depends_on:
