@@ -1,15 +1,25 @@
 package ws.productos.adaptador.repositorio;
 
 import lombok.extern.java.Log;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
+import ws.brand.modelo.entidad.Brand;
+import ws.category.modelo.entidad.Category;
+import ws.information.modelo.dto.InformationDTO;
+import ws.information.modelo.entidad.Information;
 import ws.product.modelo.dto.ProductDTO;
 import ws.product.modelo.entidad.Product;
 import ws.product.puerto.repositorio.RepositorioProduct;
+import ws.reference.modelo.dto.ImageReferenceInfoDTO;
+import ws.reference.modelo.entidad.Reference;
+import ws.tag.modelo.entidad.Tag;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -53,5 +63,22 @@ public class RepositorioProductMongo implements RepositorioProduct {
         Criteria criteria = Criteria.where("id").is(id);
         Query query = new Query(criteria);
         return this.mongoTemplate.findOne(query,Product.class,"products");
+    }
+
+    @Override
+    public ProductDTO updateProduct(Product product) {
+        Criteria criteria = Criteria.where("_id").is(product.getId());
+        Query query = new Query(criteria);
+        Update update = new Update();
+        update.set("tag",product.getTag());
+        update.set("category",product.getCategory());
+        update.set("brand",product.getBrand());
+        update.set("name",product.getName());
+        update.set("information",new InformationDTO(
+                product.getInformation().getBenefits(),
+                product.getInformation().getFeature(),
+                product.getInformation().getDescription()));
+        update.set("references",product.getReferences());
+        return this.mongoTemplate.findAndModify(query,update, ProductDTO.class, "products");
     }
 }

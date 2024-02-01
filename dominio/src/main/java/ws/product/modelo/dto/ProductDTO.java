@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 import ws.brand.modelo.dto.BrandDTO;
 import ws.information.modelo.dto.InformationDTO;
+import ws.product.modelo.entidad.Product;
 import ws.reference.modelo.dto.ReferenceDTO;
 import java.util.List;
 
@@ -21,10 +22,10 @@ public class ProductDTO {
     private int brand;
     private String name;
     private InformationDTO information;
-    private List<ReferenceDTO> references;
+    private List<String> references;
 
     public ProductDTO(int code, int tag, int category, int brand, String name,
-                      InformationDTO information, List<ReferenceDTO> references){
+                      InformationDTO information, List<String> references){
         this.code = code;
         this.tag = tag;
         this.category = category;
@@ -33,4 +34,5 @@ public class ProductDTO {
         this.information = information;
         this.references = references;
     }
+
 }
