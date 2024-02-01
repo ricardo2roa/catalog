@@ -9,7 +9,7 @@ spring:
       password: sa
    data:
       mongodb:
-         host: localhost
+         host: db-catalog
          port: 27017
          database: catalog
    jpa:
