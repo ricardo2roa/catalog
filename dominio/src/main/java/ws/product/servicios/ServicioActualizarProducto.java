@@ -29,5 +29,5 @@ public class ServicioActualizarProducto {
         this.serviceImageStorage = serviceImageStorage;
     }
 
-    public Product ejecutar(SolictudActualizarProducto solictudActualizarProducto){}
+    //public Product ejecutar(SolictudActualizarProducto solictudActualizarProducto){}
 }
