@@ -1,5 +1,6 @@
 package ws.UploadFiles.servicios;
 
+import lombok.extern.java.Log;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Set;
-
+@Log
 public class ImageSystemStorageService {
     public static final Set<String> LIST_EXT = Set.of(".jpg", ".png", ".jpeg");
     private final Path directorioRaiz;
@@ -38,6 +39,10 @@ public class ImageSystemStorageService {
             Path destinoArchivo = this.directorioRaiz.resolve(
                     Paths.get(nameFile))
                     .normalize().toAbsolutePath();
+            
+            log.info("directorio "+destinoArchivo);
+            log.info("Path directorio "+destinoArchivo.toAbsolutePath());
+
             if(!destinoArchivo.getParent().equals(this.directorioRaiz.toAbsolutePath())){
                 throw new StorageException("No se puede guardar por que esta fuera del directorio");
             }
