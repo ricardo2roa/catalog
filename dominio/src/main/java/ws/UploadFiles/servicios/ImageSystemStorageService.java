@@ -39,7 +39,7 @@ public class ImageSystemStorageService {
             Path destinoArchivo = this.directorioRaiz.resolve(
                     Paths.get(nameFile))
                     .normalize().toAbsolutePath();
-            
+
             log.info("directorio "+destinoArchivo);
             log.info("Path directorio "+destinoArchivo.toAbsolutePath());
 

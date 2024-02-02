@@ -13,6 +13,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8080:7000
+    volumes:
+      - /home/ricardo2roa/web-services/img:/app/img
     depends_on:
       - db-catalog
 volumes:
