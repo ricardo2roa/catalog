@@ -29,4 +29,4 @@ logging:
       org.springframework.security.web: debug
       org.springframework.graphql: DEBUG
 storage:
-   location: \\wsl.localhost\Ubuntu-22.04\home\ricardo2roa\web-services\img
+   location: \\wsl$\Ubuntu-22.04\home\ricardo2roa\web-services\img
