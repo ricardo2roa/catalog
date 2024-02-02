@@ -29,4 +29,4 @@ logging:
       org.springframework.security.web: debug
       org.springframework.graphql: DEBUG
 storage:
-   location: /home/img
+   location: /mtn/d/web-services/img
