@@ -11,7 +11,7 @@ import java.util.Arrays;
 @Configuration
 public class CorsConfig {
     @Bean
-     CorsConfigurationSource corsConfigurationSource() {
+     public static CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cors = new CorsConfiguration();
 
         cors.setAllowedOrigins(Arrays.asList("http://finca-front/**"));

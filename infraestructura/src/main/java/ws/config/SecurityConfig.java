@@ -28,7 +28,7 @@ public class SecurityConfig {
         http
                 .securityMatcher("/v1/**")
             .csrf(AbstractHttpConfigurer::disable)
-            .cors(Customizer.withDefaults())
+            .cors(cors -> cors.configurationSource(CorsConfig.corsConfigurationSource()))
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests((request) -> request
                     .requestMatchers(HttpMethod.POST,"/v1/api/auth/**").permitAll()
