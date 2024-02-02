@@ -9,7 +9,11 @@ spring:
       password: sa
    data:
       mongodb:
-         uri: mongodb://admin:Pr0duct0s12@db-catalog/catalog
+         host: db-catalog
+         port: 27017
+         database: catalog
+         user: admin
+         password: Pr0duct0s12
    jpa:
       database-platform: org.hibernate.dialect.H2Dialect
       defer-datasource-initialization: true
