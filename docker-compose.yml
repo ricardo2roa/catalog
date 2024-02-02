@@ -6,17 +6,26 @@ services:
     ports:
       - 30000:27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: Pr0duct0s12
+      - MONGO_INITDB_ROOT_USERNAME = admin
+      - MONGO_INITDB_ROOT_PASSWORD = Pr0duct0s12
+      - MONGO_INITDB_DATABASE = catalog
+      - MONGO_DB_USERNAME = admin
+      - MONGO_DB_PASSWORD = Pr0duct0s12
     volumes:
       - mongo-data:/data/db
+    networks:
+      - main-network
   catalog-ws:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - 8080:7000
+    networks:
+      - main-network
     depends_on:
       - db-catalog
 volumes:
   mongo-data:
+networks:
+  main-network:
