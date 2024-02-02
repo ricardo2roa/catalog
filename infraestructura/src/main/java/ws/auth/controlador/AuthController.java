@@ -34,6 +34,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         String jwt = this.jwtUtils.create(loginDTO.getUsername());
-        return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION,jwt).build();
+        return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION,jwt)
+                .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,"Authorization").build();
     }
 }
