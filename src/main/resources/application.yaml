@@ -26,6 +26,7 @@ spring:
          mapping: /productos
 logging:
    level:
+      graphql: debug
       org.springframework.security.web: debug
       org.springframework.graphql: DEBUG
 storage:
