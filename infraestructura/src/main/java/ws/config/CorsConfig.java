@@ -15,7 +15,7 @@ public class CorsConfig {
         CorsConfiguration cors = new CorsConfiguration();
 
         cors.setAllowedOrigins(Arrays.asList("http://finca-front","http://localhost:4200","http://localhost:4200/","http://finca-front/"));
-        cors.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
+        cors.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
         cors.setAllowedHeaders(Arrays.asList("*"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
