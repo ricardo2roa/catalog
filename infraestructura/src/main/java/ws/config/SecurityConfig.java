@@ -26,14 +26,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .securityMatcher("/v1/**")
+                //.securityMatcher("/v1/**")
             .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configurationSource(CorsConfig.corsConfigurationSource()))
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests((request) -> request
                     .requestMatchers(HttpMethod.POST,"/v1/api/auth/**").permitAll()
                     .requestMatchers(HttpMethod.GET,"/v1/producto/**").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.POST,"/productos").permitAll()
+                    .requestMatchers(HttpMethod.POST,"/graphql").permitAll()
                     .requestMatchers(HttpMethod.GET,"/v1/imagen/*").permitAll()
                     .requestMatchers(HttpMethod.GET, "/v1/productos").hasAnyRole("ADMIN", "CUSTOMER")
                     .requestMatchers(HttpMethod.GET,"/v1/producto/**").hasRole("ADMIN")
