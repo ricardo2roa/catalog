@@ -39,7 +39,7 @@ public class Product {
     private List<Reference> fullreferences;
 
     private Product(String id, int code, Tag fullTag, Category fullCategory, Brand fullBrand,
-                   String name, Information information, List<String> references) {
+                   String name, Information information, List<Reference> references) {
         this.id = id;
         this.code = code;
         this.fullTag = fullTag;
@@ -47,7 +47,7 @@ public class Product {
         this.fullBrand = fullBrand;
         this.name = name;
         this.information = information;
-        this.references = references;
+        this.fullreferences = references;
     }
 
     private Product(int code, int tag, int category, int brand, String name, Information information,
@@ -75,7 +75,7 @@ public class Product {
     }
 
     public static Product recrear(String id, int code, Tag tag, Category category, Brand brand, String name, Information information,
-                                  List<String> references) {
+                                  List<Reference> references) {
         //Validadores
         return new Product(id,code, tag, category, brand, name, information, references);
     }

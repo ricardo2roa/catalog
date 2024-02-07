@@ -1,13 +1,14 @@
 package ws.product.servicios;
 
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import ws.brand.modelo.entidad.Brand;
 import ws.brand.puerto.repositorio.RepositorioBrand;
 import ws.category.modelo.entidad.Category;
 import ws.category.puerto.repositorio.RepositorioCategory;
 import ws.product.modelo.entidad.Product;
 import ws.product.puerto.repositorio.RepositorioProduct;
+import ws.reference.modelo.entidad.Reference;
+import ws.reference.puerto.repositorio.RepositorioReference;
 import ws.tag.modelo.entidad.Tag;
 import ws.tag.puerto.repositorio.RepositorioTag;
 
@@ -18,12 +19,14 @@ public class ServicioBuscarProducto {
     private final RepositorioCategory repositorioCategory;
     private final RepositorioBrand repositorioBrand;
     private final RepositorioTag repositorioTag;
+    private final RepositorioReference repositorioReference;
 
-    public ServicioBuscarProducto(RepositorioProduct repositorioProduct, RepositorioCategory repositorioCategory, RepositorioBrand repositorioBrand, RepositorioTag repositorioTag) {
+    public ServicioBuscarProducto(RepositorioProduct repositorioProduct, RepositorioCategory repositorioCategory, RepositorioBrand repositorioBrand, RepositorioTag repositorioTag, RepositorioReference repositorioReference) {
         this.repositorioProduct = repositorioProduct;
         this.repositorioCategory = repositorioCategory;
         this.repositorioBrand = repositorioBrand;
         this.repositorioTag = repositorioTag;
+        this.repositorioReference = repositorioReference;
     }
 
     public List<Product> buscarProductos(){
@@ -42,9 +45,10 @@ public class ServicioBuscarProducto {
             Category category = this.repositorioCategory.obtenerByCode(product.getCategory());
             Brand brand = this.repositorioBrand.obtenerByCode(product.getBrand());
             Tag tag = this.repositorioTag.obtenerByCode(product.getTag());
+            List<Reference> references = product.getReferences().stream().map(reference->this.repositorioReference.buscarPorId(reference)).toList();
             return Product.recrear(product.getId(),product.getCode(),tag,category,brand,
                     product.getName(), product.getInformation(),
-                    product.getReferences());
+                    references);
         }).toList();
         return new PageImpl<>(list);
     }
