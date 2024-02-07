@@ -18,7 +18,7 @@ public class ComandoBuscarProductosPages {
     }
     
     @GetMapping
-    public ResponseEntity<PageImpl<Product>> buscarProductos(){
+    public ResponseEntity<PageImpl<Product>> buscarProductosPages(){
         return ResponseEntity.ok(this.manejadorBuscarProductosPages.ejecutar());
     }
 }
