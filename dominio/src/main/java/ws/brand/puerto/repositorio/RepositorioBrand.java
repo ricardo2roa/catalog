@@ -12,5 +12,6 @@ public interface RepositorioBrand {
     Brand obtenerName(String name);
     int guardar(Brand brand);
     Map<Integer, BrandDTO> obtenerListByCodes(Set<Integer> brands);
+    Map<Integer, Brand> obtenerListValrep();
     int calcularCode();
 }

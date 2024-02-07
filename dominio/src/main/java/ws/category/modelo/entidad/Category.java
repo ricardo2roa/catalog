@@ -1,5 +1,7 @@
 package ws.category.modelo.entidad;
 
+import ws.category.modelo.dto.CategoryDTO;
+
 import java.util.Date;
 
 public class Category {
@@ -35,6 +37,11 @@ public class Category {
         return new Category(code, name, locked,disabled,dateCreated);
     }
 
+    public static Category recrear(CategoryDTO categoryDTO){
+        //Validar
+        return new Category(categoryDTO.getCode(), categoryDTO.getName(), categoryDTO.getLocked(),
+                categoryDTO.getDisabled(),categoryDTO.getDateCreated());
+    }
     public int getCode() {
         return code;
     }

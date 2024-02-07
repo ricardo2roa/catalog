@@ -1,5 +1,7 @@
 package ws.brand.modelo.entidad;
 
+import ws.brand.modelo.dto.BrandDTO;
+
 import java.util.Date;
 
 public class Brand {
@@ -30,6 +32,10 @@ public class Brand {
     }
     public static Brand recrear(int code, String name, Boolean locked, Boolean disabled,Date dateCreated){
         return new Brand(code,name,locked,disabled,dateCreated);
+    }
+
+    public static Brand recrear(BrandDTO dto){
+        return new Brand(dto.getCode(),dto.getName(),dto.getLocked(),dto.getDisabled(),dto.getDateCreated());
     }
 
     public int getCode() {

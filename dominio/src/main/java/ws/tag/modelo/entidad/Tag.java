@@ -1,6 +1,7 @@
 package ws.tag.modelo.entidad;
 
 import ws.brand.modelo.entidad.Brand;
+import ws.tag.modelo.dto.TagDTO;
 
 import java.util.Date;
 
@@ -34,6 +35,9 @@ public class Tag {
         return new Tag(code,name,locked,disabled,dateCreated);
     }
 
+    public static Tag recrear(TagDTO dto){
+        return new Tag(dto.getCode(),dto.getName(),dto.getLocked(),dto.getDisabled(),dto.getDateCreated());
+    }
     public int getCode() {
         return code;
     }

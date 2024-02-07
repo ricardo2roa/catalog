@@ -61,6 +61,12 @@ public class RepositorioTagMongo implements RepositorioTag {
     }
 
     @Override
+    public Map<Integer, Tag> obtenerlistValrep() {
+        var tagDTO = this.mongoTemplate.findAll(TagDTO.class);
+        return tagDTO.stream().collect(Collectors.toMap(TagDTO::getCode, dto -> Tag.recrear(dto)));
+    }
+
+    @Override
     public int calcularCode() {
         return (int)(this.mongoTemplate.count(new Query(),"tags") + 1);
     }

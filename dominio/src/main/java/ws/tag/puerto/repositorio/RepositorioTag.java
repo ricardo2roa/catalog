@@ -10,5 +10,6 @@ public interface RepositorioTag {
     Tag obtenerByCode(int code);
     int guardar(Tag tag);
     Map<Integer, TagDTO> obtenerListByCodes(Set<Integer> codes);
+    Map<Integer,Tag> obtenerlistValrep();
     int calcularCode();
 }

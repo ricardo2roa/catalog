@@ -13,6 +13,6 @@ public interface RepositorioCategory {
     int guardar(Category category);
 
     Map<Integer, CategoryDTO> obtenerListByCodes(Set<Integer> codes);
-
+    Map<Integer, Category> obtenerListValrep();
     int calcularCode();
 }

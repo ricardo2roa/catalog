@@ -59,6 +59,12 @@ public class RepositorioCategoryMongo implements RepositorioCategory {
     }
 
     @Override
+    public Map<Integer, Category> obtenerListValrep() {
+        var categoryDtos = this.mongoTemplate.findAll(CategoryDTO.class);
+        return categoryDtos.stream().collect(Collectors.toMap(CategoryDTO::getCode, dto -> Category.recrear(dto)));
+    }
+
+    @Override
     public int calcularCode() {
         return (int)(this.mongoTemplate.count(new Query(),"categories")+1);
     }

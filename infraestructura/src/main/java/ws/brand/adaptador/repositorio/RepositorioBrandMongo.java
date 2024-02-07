@@ -47,6 +47,13 @@ public class RepositorioBrandMongo implements RepositorioBrand {
         Map<Integer,BrandDTO> response =  brandDto.stream().collect(Collectors.toMap(BrandDTO::getCode, Function.identity()));
         return response;
     }
+
+    @Override
+    public Map<Integer, Brand> obtenerListValrep() {
+        var brandDto = this.mongoTemplate.findAll(BrandDTO.class);
+        return brandDto.stream().collect(Collectors.toMap(BrandDTO::getCode, dto -> Brand.recrear(dto)));
+    }
+
     @Override
     public Brand obtenerName(String name) {
         return null;
