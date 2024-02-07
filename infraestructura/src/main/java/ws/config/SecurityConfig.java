@@ -33,9 +33,8 @@ public class SecurityConfig {
             .authorizeHttpRequests((request) -> request
                     .requestMatchers(HttpMethod.POST,"/v1/api/auth/**").permitAll()
                     .requestMatchers(HttpMethod.GET,"/v1/producto/**").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.POST,"/graphql").permitAll()
                     .requestMatchers(HttpMethod.GET,"/v1/imagen/*").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/v1/productos").hasAnyRole("ADMIN", "CUSTOMER")
+                    .requestMatchers(HttpMethod.GET, "/v1/productos/**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET,"/v1/producto/**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST,"/v1/producto/**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/v1/brand/**").hasRole("ADMIN")
