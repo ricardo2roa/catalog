@@ -81,4 +81,5 @@ public class RepositorioProductMongo implements RepositorioProduct {
         update.set("references",product.getReferences());
         return this.mongoTemplate.findAndModify(query,update, ProductDTO.class, "products");
     }
+
 }

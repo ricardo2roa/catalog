@@ -42,8 +42,9 @@ public class BeanServicio {
     }
 
     @Bean
-    public ServicioBuscarProducto servicioBuscarProducto(RepositorioProduct repositorioProduct){
-        return new ServicioBuscarProducto(repositorioProduct);
+    public ServicioBuscarProducto servicioBuscarProducto(RepositorioProduct repositorioProduct, RepositorioCategory repositorioCategory,
+                                                         RepositorioBrand repositorioBrand, RepositorioTag repositorioTag){
+        return new ServicioBuscarProducto(repositorioProduct, repositorioCategory, repositorioBrand, repositorioTag);
     }
 
     @Bean
