@@ -14,9 +14,10 @@ services:
     ports:
       - 8080:7000
     volumes:
-      - /home/ricardo2roa/full-app/web-services/img:/app/img
+      - /home/ricardo/finca-app/web-services/img:/app/img
     depends_on:
       - db-catalog
 volumes:
   mongo-data:
 
+cd 
