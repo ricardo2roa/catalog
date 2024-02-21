@@ -7,6 +7,7 @@ import ws.brand.modelo.entidad.Brand;
 import ws.brand.puerto.repositorio.RepositorioBrand;
 
 public class ServicioConsultarBrands {
+    public static final int allBrands.size() = 10;
     private final RepositorioBrand repositorioBrand;
 
     public ServicioConsultarBrands(RepositorioBrand repositorioBrand) {
@@ -17,7 +18,7 @@ public class ServicioConsultarBrands {
         var size = this.repositorioBrand.calcularCode() - 1;
         return new PageImpl<>(
                 allBrands,
-                PageRequest.ofSize(size),
+                PageRequest.of(numberPage,allBrands.size()),
                 size
         );
     }
