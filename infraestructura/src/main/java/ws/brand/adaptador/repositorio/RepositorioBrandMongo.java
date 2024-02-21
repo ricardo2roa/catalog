@@ -61,7 +61,8 @@ public class RepositorioBrandMongo implements RepositorioBrand {
         if(locked) criteria.andOperator(Criteria.where("locked").is(true));
         if(disabled) criteria.andOperator(Criteria.where("disabled").is(true));
         Query query = new Query(criteria);
-        query.skip((page + SIZE_PAGE));
+        var offset = ((long) page * SIZE_PAGE);
+        query.skip(offset);
         query.limit(SIZE_PAGE);
         return this.mongoTemplate.find(query,BrandDTO.class).stream()
                 .map(Brand::recrear).toList();
