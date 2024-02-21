@@ -9,7 +9,7 @@ import ws.brand.puerto.repositorio.RepositorioBrand;
 import java.util.List;
 
 public class ServicioConsultarBrands {
-
+    private final int PAGE_SIZE = 10;
     private final RepositorioBrand repositorioBrand;
 
     public ServicioConsultarBrands(RepositorioBrand repositorioBrand) {
@@ -20,7 +20,7 @@ public class ServicioConsultarBrands {
         var size = this.repositorioBrand.calcularCode() - 1;
         return new PageImpl<>(
                 allBrands,
-                PageRequest.of(numberPage,allBrands.size()),
+                PageRequest.of(numberPage,PAGE_SIZE),
                 size
         );
     }
