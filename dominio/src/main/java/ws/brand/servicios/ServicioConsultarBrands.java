@@ -14,10 +14,11 @@ public class ServicioConsultarBrands {
     }
     public Page<Brand> ejecutar(int numberPage, Boolean disabled, Boolean locked){
         var allBrands = this.repositorioBrand.obtenerTodasLasMarcas(numberPage, disabled, locked);
+        var size = this.repositorioBrand.calcularCode() - 1;
         return new PageImpl<>(
                 allBrands,
-                PageRequest.ofSize(allBrands.size()),
-                allBrands.size()
+                PageRequest.ofSize(size),
+                size
         );
     }
 }
