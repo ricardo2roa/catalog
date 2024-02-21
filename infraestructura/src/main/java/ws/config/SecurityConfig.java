@@ -39,6 +39,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.GET,"/v1/producto/**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST,"/v1/producto/**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/v1/brand/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/v1/brands/**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/v1/tag/**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET,"/v1/productos/ramdom").hasAuthority("ramdom")
                     .anyRequest().authenticated()
