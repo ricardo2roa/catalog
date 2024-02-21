@@ -6,6 +6,7 @@ import ws.UploadFiles.config.PropiedadesAlmacenamiento;
 import ws.UploadFiles.servicios.ImageSystemStorageService;
 import ws.brand.puerto.repositorio.RepositorioBrand;
 import ws.brand.servicios.ServicioBuscarBrand;
+import ws.brand.servicios.ServicioConsultarBrands;
 import ws.brand.servicios.ServicioCrearBrand;
 import ws.category.puerto.repositorio.RepositorioCategory;
 import ws.category.servicios.ServicioConsultarCategory;
@@ -80,5 +81,10 @@ public class BeanServicio {
     @Bean
     public ImageSystemStorageService imageSystemStorageService(PropiedadesAlmacenamiento propiedadesAlmacenamiento){
         return new ImageSystemStorageService(propiedadesAlmacenamiento);
+    }
+
+    @Bean
+    public ServicioConsultarBrands servicioConsultarBrands(RepositorioBrand repositorioBrand){
+        return new ServicioConsultarBrands(repositorioBrand);
     }
 }

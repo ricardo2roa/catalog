@@ -55,6 +55,16 @@ public class RepositorioBrandMongo implements RepositorioBrand {
     }
 
     @Override
+    public List<Brand> obtenerTodasLasMarcas(Boolean disabled, Boolean locked) {
+        Criteria criteria = new Criteria();
+        if(locked) criteria.andOperator(Criteria.where("locked").is(true));
+        if(disabled) criteria.andOperator(Criteria.where("disabled").is(true));
+        Query query = new Query(criteria);
+        return this.mongoTemplate.find(query,BrandDTO.class).stream()
+                .map(Brand::recrear).toList();
+    }
+
+    @Override
     public Brand obtenerName(String name) {
         return null;
     }
