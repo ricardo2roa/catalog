@@ -7,17 +7,17 @@ import ws.brand.modelo.entidad.Brand;
 import ws.brand.puerto.repositorio.RepositorioBrand;
 
 public class ServicioConsultarBrands {
-    public static final int PAGE_SIZE = 10;
     private final RepositorioBrand repositorioBrand;
 
     public ServicioConsultarBrands(RepositorioBrand repositorioBrand) {
         this.repositorioBrand = repositorioBrand;
     }
-    public Page<Brand> ejecutar(int page, Boolean disabled, Boolean locked){
+    public Page<Brand> ejecutar(int numberPage, Boolean disabled, Boolean locked){
+        var allBrands = this.repositorioBrand.obtenerTodasLasMarcas(numberPage, disabled, locked);
         return new PageImpl<>(
-                this.repositorioBrand.obtenerTodasLasMarcas(disabled, locked),
-                PageRequest.of(page, PAGE_SIZE),
-                PAGE_SIZE
+                allBrands,
+                PageRequest.ofSize(allBrands.size()),
+                allBrands.size()
         );
     }
 }

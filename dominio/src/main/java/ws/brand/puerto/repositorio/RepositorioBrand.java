@@ -13,6 +13,6 @@ public interface RepositorioBrand {
     int guardar(Brand brand);
     Map<Integer, BrandDTO> obtenerListByCodes(Set<Integer> brands);
     Map<Integer, Brand> obtenerListValrep();
-    List<Brand> obtenerTodasLasMarcas(Boolean disabled, Boolean locked);
+    List<Brand> obtenerTodasLasMarcas(int page, Boolean disabled, Boolean locked);
     int calcularCode();
 }

@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class RepositorioBrandMongo implements RepositorioBrand {
+    private final int SIZE_PAGE = 10;
     private final MongoTemplate mongoTemplate;
 
     public RepositorioBrandMongo(MongoTemplate mongoTemplate) {
@@ -55,11 +56,13 @@ public class RepositorioBrandMongo implements RepositorioBrand {
     }
 
     @Override
-    public List<Brand> obtenerTodasLasMarcas(Boolean disabled, Boolean locked) {
+    public List<Brand> obtenerTodasLasMarcas(int page,Boolean disabled, Boolean locked) {
         Criteria criteria = new Criteria();
         if(locked) criteria.andOperator(Criteria.where("locked").is(true));
         if(disabled) criteria.andOperator(Criteria.where("disabled").is(true));
         Query query = new Query(criteria);
+        query.skip((page + SIZE_PAGE));
+        query.limit(SIZE_PAGE);
         return this.mongoTemplate.find(query,BrandDTO.class).stream()
                 .map(Brand::recrear).toList();
     }
