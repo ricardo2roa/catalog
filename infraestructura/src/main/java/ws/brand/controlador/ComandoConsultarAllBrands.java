@@ -20,9 +20,9 @@ public class ComandoConsultarAllBrands {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Brand>> consultarTodasLasMarcas(@RequestParam(required = false) int page,
-                                                               @RequestParam(required = false) Boolean disabled,
-                                                               @RequestParam(required = false) Boolean locked){
+    public ResponseEntity<Page<Brand>> consultarTodasLasMarcas(@RequestParam(required = false, defaultValue = "0") int page,
+                                                               @RequestParam(required = false, defaultValue = "false") Boolean disabled,
+                                                               @RequestParam(required = false, defaultValue = "false") Boolean locked){
         return ResponseEntity.ok(this.manejadorConsultarBrand.ejecutar(page,disabled,locked));
     }
 }
