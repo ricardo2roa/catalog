@@ -9,7 +9,7 @@ spring:
       password: sa
    data:
       mongodb:
-         uri: mongodb://db-catalog/catalog
+         uri: mongodb://localhost:30000/catalog
    jpa:
       database-platform: org.hibernate.dialect.H2Dialect
       defer-datasource-initialization: true
@@ -30,4 +30,4 @@ logging:
       org.springframework.security.web: debug
       org.springframework.graphql: DEBUG
 storage:
-   location: /app/img
+   #location: /app/img

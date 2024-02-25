@@ -7,16 +7,16 @@ services:
       - 30000:27017
     volumes:
       - mongo-data:/data/db
-  catalog-ws:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - 8080:7000
-    volumes:
-      - /home/ricardo/finca-app/web-services/img:/app/img
-    depends_on:
-      - db-catalog
+  #catalog-ws:
+  #  build:
+  #    context: .
+  #    dockerfile: Dockerfile
+  #  ports:
+  #    - 8080:7000
+  #  volumes:
+  #    - /home/ricardo/finca-app/web-services/img:/app/img
+  #  depends_on:
+  #    - db-catalog
 volumes:
   mongo-data:
 
