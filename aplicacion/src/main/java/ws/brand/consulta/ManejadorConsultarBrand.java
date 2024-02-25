@@ -17,7 +17,7 @@ public class ManejadorConsultarBrand {
         this.servicioConsultarBrands = servicioConsultarBrands;
     }
 
-    public Page<Brand> ejecutar(int page, Boolean disabled, Boolean locked, List<Integer> codes){
-        return this.servicioConsultarBrands.ejecutar(page,disabled,locked,codes);
+    public Page<Brand> ejecutar(int page, Boolean disabled, Boolean locked, List<Integer> codes, String searchText){
+        return this.servicioConsultarBrands.ejecutar(page,disabled,locked,codes,searchText);
     }
 }

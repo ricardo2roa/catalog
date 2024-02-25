@@ -60,7 +60,7 @@ public class RepositorioBrandMongo implements RepositorioBrand {
     }
 
     @Override
-    public List<Brand> obtenerTodasLasMarcas(int page,Boolean disabled, Boolean locked, List<Integer> codes) {
+    public List<Brand> obtenerTodasLasMarcas(int page,Boolean disabled, Boolean locked, List<Integer> codes, String searchText) {
         Criteria criteria = new Criteria();
         if(locked) criteria.andOperator(Criteria.where("locked").is(true));
         if(disabled) criteria.andOperator(Criteria.where("disabled").is(true));
@@ -68,6 +68,9 @@ public class RepositorioBrandMongo implements RepositorioBrand {
             criteria.orOperator(
                     codes.stream().map(code->Criteria.where("code").is(code)).toList()
             );
+        }
+        if(!searchText.isEmpty()){
+            criteria.andOperator(Criteria.where("name").regex(searchText,"i"));
         }
         Query query = new Query(criteria);
         var offset = ((long) page * SIZE_PAGE);

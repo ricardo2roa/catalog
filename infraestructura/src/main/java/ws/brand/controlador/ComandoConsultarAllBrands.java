@@ -25,7 +25,8 @@ public class ComandoConsultarAllBrands {
     public ResponseEntity<Page<Brand>> consultarTodasLasMarcas(@RequestParam(required = false, defaultValue = "0") int page,
                                                                @RequestParam(required = false, defaultValue = "false") Boolean disabled,
                                                                @RequestParam(required = false, defaultValue = "false") Boolean locked,
-                                                               @RequestParam(required = false, defaultValue = "") List<Integer> codes){
-        return ResponseEntity.ok(this.manejadorConsultarBrand.ejecutar(page,disabled,locked,codes));
+                                                               @RequestParam(required = false, defaultValue = "") List<Integer> codes,
+                                                               @RequestParam(required = false, defaultValue = "") String searchText){
+        return ResponseEntity.ok(this.manejadorConsultarBrand.ejecutar(page,disabled,locked,codes,searchText));
     }
 }
