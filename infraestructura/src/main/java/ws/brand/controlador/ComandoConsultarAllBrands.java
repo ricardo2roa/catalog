@@ -28,8 +28,8 @@ public class ComandoConsultarAllBrands {
                                                                @RequestParam(required = false, defaultValue = "false") Boolean locked,
                                                                @RequestParam(required = false, defaultValue = "") List<Integer> codes,
                                                                @RequestParam(required = false, defaultValue = "") String searchText,
-                                                               @RequestParam(required = false, defaultValue = "") String sortField,
-                                                               @RequestParam(required = false, defaultValue = "0") String sortOrder){
+                                                               @RequestParam(required = false, defaultValue = "name") String sortField,
+                                                               @RequestParam(required = false, defaultValue = "1") String sortOrder){
         return ResponseEntity.ok(this.manejadorConsultarBrand.ejecutar(page,disabled,locked,codes,searchText,new SortFieldDTO(sortField,Integer.valueOf(sortOrder))));
     }
 }

@@ -35,7 +35,7 @@ public class ServicioConsultarBrands {
         if (sort.getOrder() < 0 && comparator != null) {
             comparator = comparator.reversed();
         }
-        
+
         allBrands.sort(comparator);
 
         var size = this.repositorioBrand.calcularCode() - 1;
