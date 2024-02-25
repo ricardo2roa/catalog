@@ -30,6 +30,6 @@ public class ComandoConsultarAllBrands {
                                                                @RequestParam(required = false, defaultValue = "") String searchText,
                                                                @RequestParam(required = false, defaultValue = "") String sortField,
                                                                @RequestParam(required = false, defaultValue = "0") String sortOrder){
-        return ResponseEntity.ok(this.manejadorConsultarBrand.ejecutar(page,disabled,locked,codes,searchText,new SortFieldDTO(sortField,sortOrder)));
+        return ResponseEntity.ok(this.manejadorConsultarBrand.ejecutar(page,disabled,locked,codes,searchText,new SortFieldDTO(sortField,Integer.valueOf(sortOrder))));
     }
 }
