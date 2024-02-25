@@ -1,6 +1,6 @@
 #logging.level.org.springframework.security.web.*=debug
 server:
-   port: 7000
+   port: 8080
 spring:
    datasource:
       url: jdbc:h2:mem:userdb
