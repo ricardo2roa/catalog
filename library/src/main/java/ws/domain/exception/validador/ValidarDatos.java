@@ -1,7 +1,7 @@
-package ws.exception.validador;
+package ws.domain.exception.validador;
 
-import ws.exception.modelo.FindDbException;
-import ws.exception.modelo.RequestException;
+import ws.domain.exception.modelo.RequestException;
+import ws.domain.exception.modelo.FindDbException;
 
 import java.util.List;
 

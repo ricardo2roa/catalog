@@ -8,6 +8,7 @@ import ws.brand.puerto.repositorio.RepositorioBrand;
 import ws.brand.servicios.ServicioBuscarBrand;
 import ws.brand.servicios.ServicioConsultarBrands;
 import ws.brand.servicios.ServicioCrearBrand;
+import ws.brand.servicios.ServicioUpdateBrand;
 import ws.category.puerto.repositorio.RepositorioCategory;
 import ws.category.servicios.ServicioConsultarCategory;
 import ws.category.servicios.ServicioCrearCategory;
@@ -86,5 +87,10 @@ public class BeanServicio {
     @Bean
     public ServicioConsultarBrands servicioConsultarBrands(RepositorioBrand repositorioBrand){
         return new ServicioConsultarBrands(repositorioBrand);
+    }
+
+    @Bean
+    public ServicioUpdateBrand servicioUpdateBrand(RepositorioBrand repositorioBrand){
+        return new ServicioUpdateBrand(repositorioBrand);
     }
 }

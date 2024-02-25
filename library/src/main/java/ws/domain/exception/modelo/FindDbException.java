@@ -1,4 +1,4 @@
-package ws.exception.modelo;
+package ws.domain.exception.modelo;
 
 public class FindDbException extends RuntimeException{
     private String code;

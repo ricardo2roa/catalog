@@ -1,4 +1,4 @@
-package ws.error.modelo;
+package ws.infraestructura.error.modelo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

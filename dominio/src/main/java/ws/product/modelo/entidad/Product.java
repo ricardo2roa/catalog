@@ -3,17 +3,14 @@ package ws.product.modelo.entidad;
 import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
 import ws.brand.modelo.entidad.Brand;
 import ws.category.modelo.entidad.Category;
-import ws.exception.validador.ValidarDatos;
+import ws.domain.exception.validador.ValidarDatos;
 import ws.information.modelo.entidad.Information;
-import ws.reference.modelo.dto.ReferenceDTO;
 import ws.reference.modelo.entidad.Reference;
 import ws.tag.modelo.entidad.Tag;
 
 import java.util.List;
-import java.util.Set;
 
 @NoArgsConstructor
 @Log

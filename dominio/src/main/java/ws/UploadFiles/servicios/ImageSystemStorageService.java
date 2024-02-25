@@ -5,10 +5,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.web.multipart.MultipartFile;
 import ws.UploadFiles.config.PropiedadesAlmacenamiento;
-import ws.exception.modelo.FileRequestException;
-import ws.exception.modelo.FileStorageException;
-import ws.exception.modelo.RequestException;
-import ws.exception.modelo.StorageException;
+import ws.domain.exception.modelo.FileRequestException;
+import ws.domain.exception.modelo.FileStorageException;
+import ws.domain.exception.modelo.RequestException;
+import ws.domain.exception.modelo.StorageException;
 
 import java.io.IOException;
 import java.io.InputStream;

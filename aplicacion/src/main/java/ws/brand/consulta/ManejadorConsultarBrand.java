@@ -7,6 +7,8 @@ import ws.brand.modelo.entidad.Brand;
 import ws.brand.puerto.repositorio.RepositorioBrand;
 import ws.brand.servicios.ServicioConsultarBrands;
 
+import java.util.List;
+
 @Component
 public class ManejadorConsultarBrand {
     private final ServicioConsultarBrands servicioConsultarBrands;
@@ -15,7 +17,7 @@ public class ManejadorConsultarBrand {
         this.servicioConsultarBrands = servicioConsultarBrands;
     }
 
-    public Page<Brand> ejecutar(int page, Boolean disabled, Boolean locked){
-        return this.servicioConsultarBrands.ejecutar(page,disabled,locked);
+    public Page<Brand> ejecutar(int page, Boolean disabled, Boolean locked, List<Integer> codes){
+        return this.servicioConsultarBrands.ejecutar(page,disabled,locked,codes);
     }
 }

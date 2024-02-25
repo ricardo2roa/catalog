@@ -1,12 +1,12 @@
-package ws.exception.handler;
+package ws.infraestructura.exception.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ws.error.modelo.ErrorDTO;
-import ws.error.modelo.ErrorDetalleDTO;
-import ws.exception.modelo.*;
+import ws.domain.exception.modelo.*;
+import ws.infraestructura.error.modelo.ErrorDTO;
+import ws.infraestructura.error.modelo.ErrorDetalleDTO;
 
 @RestControllerAdvice
 public class ControllerAdvice {

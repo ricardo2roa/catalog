@@ -39,6 +39,7 @@ dependencies {
 
 	implementation project(':dominio')
 	implementation project(':aplicacion')
+	implementation project(':library')
 }
 
 tasks.named('bootJar') {

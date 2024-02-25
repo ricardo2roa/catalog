@@ -15,8 +15,8 @@ public class ServicioConsultarBrands {
     public ServicioConsultarBrands(RepositorioBrand repositorioBrand) {
         this.repositorioBrand = repositorioBrand;
     }
-    public Page<Brand> ejecutar(int numberPage, Boolean disabled, Boolean locked){
-        List<Brand> allBrands = this.repositorioBrand.obtenerTodasLasMarcas(numberPage, disabled, locked);
+    public Page<Brand> ejecutar(int numberPage, Boolean disabled, Boolean locked, List<Integer> codes){
+        List<Brand> allBrands = this.repositorioBrand.obtenerTodasLasMarcas(numberPage, disabled, locked, codes);
         var size = this.repositorioBrand.calcularCode() - 1;
         return new PageImpl<>(
                 allBrands,

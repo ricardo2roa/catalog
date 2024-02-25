@@ -1,7 +1,7 @@
 package ws.reference.modelo.entidad;
 
 import org.springframework.data.annotation.Transient;
-import ws.exception.validador.ValidarDatos;
+import ws.domain.exception.validador.ValidarDatos;
 import ws.reference.modelo.dto.ReferenceDTO;
 
 public class Reference {

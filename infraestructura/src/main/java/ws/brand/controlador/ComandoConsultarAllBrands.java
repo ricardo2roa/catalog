@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ws.brand.consulta.ManejadorConsultarBrand;
 import ws.brand.modelo.entidad.Brand;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("v1/brands")
@@ -22,7 +24,8 @@ public class ComandoConsultarAllBrands {
     @GetMapping
     public ResponseEntity<Page<Brand>> consultarTodasLasMarcas(@RequestParam(required = false, defaultValue = "0") int page,
                                                                @RequestParam(required = false, defaultValue = "false") Boolean disabled,
-                                                               @RequestParam(required = false, defaultValue = "false") Boolean locked){
-        return ResponseEntity.ok(this.manejadorConsultarBrand.ejecutar(page,disabled,locked));
+                                                               @RequestParam(required = false, defaultValue = "false") Boolean locked,
+                                                               @RequestParam(required = false, defaultValue = "[]") List<Integer> codes){
+        return ResponseEntity.ok(this.manejadorConsultarBrand.ejecutar(page,disabled,locked,codes));
     }
 }
