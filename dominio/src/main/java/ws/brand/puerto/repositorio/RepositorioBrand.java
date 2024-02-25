@@ -15,7 +15,7 @@ public interface RepositorioBrand {
     int guardar(Brand brand);
     Map<Integer, BrandDTO> obtenerListByCodes(Set<Integer> brands);
     Map<Integer, Brand> obtenerListValrep();
-    List<Brand> obtenerTodasLasMarcas(int page, Boolean disabled, Boolean locked,List<Integer> codes, String searchText, SortFieldDTO sort);
+    List<Brand> obtenerTodasLasMarcas(int page, Boolean disabled, Boolean locked,List<Integer> codes, String searchText);
     int calcularCode();
     void updateBrands(List<SolicitudUpdateBrand> brands);
 }
