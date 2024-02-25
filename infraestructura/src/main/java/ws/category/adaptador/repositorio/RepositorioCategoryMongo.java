@@ -8,10 +8,13 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import ws.brand.modelo.dto.BrandDTO;
+import ws.brand.modelo.entidad.Brand;
+import ws.brand.modelo.entidad.SolicitudUpdateBrand;
 import ws.category.modelo.dto.CategoryDTO;
 import ws.category.modelo.entidad.Category;
 import ws.category.puerto.repositorio.RepositorioCategory;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -65,7 +68,17 @@ public class RepositorioCategoryMongo implements RepositorioCategory {
     }
 
     @Override
+    public List<Brand> obtenerTodasLasCategorias(int page, Boolean disabled, Boolean locked, List<Integer> codes) {
+        return null;
+    }
+
+    @Override
     public int calcularCode() {
         return (int)(this.mongoTemplate.count(new Query(),"categories")+1);
+    }
+
+    @Override
+    public void updateCategories(List<SolicitudUpdateBrand> brands) {
+
     }
 }
