@@ -1,5 +1,6 @@
 package ws.brand.adaptador.repositorio;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -11,6 +12,7 @@ import ws.brand.modelo.entidad.SolicitudUpdateBrand;
 import ws.brand.puerto.repositorio.RepositorioBrand;
 import ws.information.modelo.dto.InformationDTO;
 import ws.infraestructura.exception.modelo.DuplicateRecordException;
+import ws.sort.modelo.dto.SortFieldDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -60,7 +62,7 @@ public class RepositorioBrandMongo implements RepositorioBrand {
     }
 
     @Override
-    public List<Brand> obtenerTodasLasMarcas(int page,Boolean disabled, Boolean locked, List<Integer> codes, String searchText) {
+    public List<Brand> obtenerTodasLasMarcas(int page,Boolean disabled, Boolean locked, List<Integer> codes, String searchText, SortFieldDTO sortField) {
         Criteria criteria = new Criteria();
         if(locked) criteria.andOperator(Criteria.where("locked").is(true));
         if(disabled) criteria.andOperator(Criteria.where("disabled").is(true));
@@ -76,6 +78,9 @@ public class RepositorioBrandMongo implements RepositorioBrand {
         var offset = ((long) page * SIZE_PAGE);
         query.skip(offset);
         query.limit(SIZE_PAGE);
+
+        Sort sort = Sort.by((sortField.getOrder() > 0)? Sort.Direction.ASC : Sort.Direction.DESC,sortField.getField());
+        query.with(sort);
         return this.mongoTemplate.find(query,BrandDTO.class).stream()
                 .map(Brand::recrear).toList();
     }

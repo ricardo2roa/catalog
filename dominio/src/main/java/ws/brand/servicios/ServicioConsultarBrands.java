@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import ws.brand.modelo.entidad.Brand;
 import ws.brand.puerto.repositorio.RepositorioBrand;
+import ws.sort.modelo.dto.SortFieldDTO;
 
 import java.util.List;
 
@@ -15,8 +16,8 @@ public class ServicioConsultarBrands {
     public ServicioConsultarBrands(RepositorioBrand repositorioBrand) {
         this.repositorioBrand = repositorioBrand;
     }
-    public Page<Brand> ejecutar(int numberPage, Boolean disabled, Boolean locked, List<Integer> codes, String searchText){
-        List<Brand> allBrands = this.repositorioBrand.obtenerTodasLasMarcas(numberPage, disabled, locked, codes, searchText);
+    public Page<Brand> ejecutar(int numberPage, Boolean disabled, Boolean locked, List<Integer> codes, String searchText, SortFieldDTO sort){
+        List<Brand> allBrands = this.repositorioBrand.obtenerTodasLasMarcas(numberPage, disabled, locked, codes, searchText, sort);
         var size = this.repositorioBrand.calcularCode() - 1;
         return new PageImpl<>(
                 allBrands,

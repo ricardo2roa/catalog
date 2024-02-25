@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ws.brand.consulta.ManejadorConsultarBrand;
 import ws.brand.modelo.entidad.Brand;
+import ws.sort.modelo.dto.SortFieldDTO;
 
 import java.util.List;
 
@@ -26,7 +27,8 @@ public class ComandoConsultarAllBrands {
                                                                @RequestParam(required = false, defaultValue = "false") Boolean disabled,
                                                                @RequestParam(required = false, defaultValue = "false") Boolean locked,
                                                                @RequestParam(required = false, defaultValue = "") List<Integer> codes,
-                                                               @RequestParam(required = false, defaultValue = "") String searchText){
-        return ResponseEntity.ok(this.manejadorConsultarBrand.ejecutar(page,disabled,locked,codes,searchText));
+                                                               @RequestParam(required = false, defaultValue = "") String searchText,
+                                                               @RequestParam(required = false, defaultValue = "") SortFieldDTO sort){
+        return ResponseEntity.ok(this.manejadorConsultarBrand.ejecutar(page,disabled,locked,codes,searchText,sort));
     }
 }

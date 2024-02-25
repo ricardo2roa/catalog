@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import ws.brand.modelo.entidad.Brand;
 import ws.brand.puerto.repositorio.RepositorioBrand;
 import ws.brand.servicios.ServicioConsultarBrands;
+import ws.sort.modelo.dto.SortFieldDTO;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class ManejadorConsultarBrand {
         this.servicioConsultarBrands = servicioConsultarBrands;
     }
 
-    public Page<Brand> ejecutar(int page, Boolean disabled, Boolean locked, List<Integer> codes, String searchText){
-        return this.servicioConsultarBrands.ejecutar(page,disabled,locked,codes,searchText);
+    public Page<Brand> ejecutar(int page, Boolean disabled, Boolean locked, List<Integer> codes, String searchText, SortFieldDTO sort){
+        return this.servicioConsultarBrands.ejecutar(page,disabled,locked,codes,searchText, sort);
     }
 }
