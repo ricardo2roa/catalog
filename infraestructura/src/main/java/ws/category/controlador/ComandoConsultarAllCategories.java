@@ -1,4 +1,4 @@
-package ws.brand.controlador;
+package ws.category.controlador;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -9,39 +9,40 @@ import org.springframework.web.bind.annotation.RestController;
 import ws.brand.consulta.ManejadorConsultarBrand;
 import ws.brand.modelo.entidad.Brand;
 import ws.brand.modelo.entidad.DateFilter;
+import ws.category.consulta.ManejadorConsultarCategories;
+import ws.category.modelo.entidad.Category;
 import ws.infraestructura.exception.modelo.ErrorParserStringToDateException;
 import ws.sort.modelo.dto.SortFieldDTO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-
 @RestController
-@RequestMapping("v1/brands")
-public class ComandoConsultarAllBrands {
-    private final ManejadorConsultarBrand manejadorConsultarBrand;
+@RequestMapping("v1/categories")
+public class ComandoConsultarAllCategories {
 
-    public ComandoConsultarAllBrands(ManejadorConsultarBrand manejadorConsultarBrand) {
-        this.manejadorConsultarBrand = manejadorConsultarBrand;
+    private final ManejadorConsultarCategories manejadorConsultarCategories;
+
+    public ComandoConsultarAllCategories(ManejadorConsultarCategories manejadorConsultarCategories) {
+        this.manejadorConsultarCategories = manejadorConsultarCategories;
     }
 
     @GetMapping
-    public ResponseEntity<Page<Brand>> consultarTodasLasMarcas(@RequestParam(required = false, defaultValue = "0") int page,
-                                                               @RequestParam(required = false, defaultValue = "") String searchText,
-                                                               @RequestParam(required = false, defaultValue = "name") String sortField,
-                                                               @RequestParam(required = false, defaultValue = "1") String sortOrder,
-                                                               @RequestParam(required = false, defaultValue = "") String nameFilter,
-                                                               @RequestParam(required = false, defaultValue = "") String lockedFilter,
-                                                               @RequestParam(required = false, defaultValue = "") String disabledFilter,
-                                                               @RequestParam(required = false, defaultValue = "") String dateFilter){
+    public ResponseEntity<Page<Category>> consultarTodasLasCategorias(@RequestParam(required = false, defaultValue = "0") int page,
+                                                                      @RequestParam(required = false, defaultValue = "") String searchText,
+                                                                      @RequestParam(required = false, defaultValue = "name") String sortField,
+                                                                      @RequestParam(required = false, defaultValue = "1") String sortOrder,
+                                                                      @RequestParam(required = false, defaultValue = "") String nameFilter,
+                                                                      @RequestParam(required = false, defaultValue = "") String lockedFilter,
+                                                                      @RequestParam(required = false, defaultValue = "") String disabledFilter,
+                                                                      @RequestParam(required = false, defaultValue = "") String dateFilter){
         List<String> nameFilters = parsertoList(nameFilter);
         List<String> lockedFilters = parsertoList(lockedFilter);
         List<String> disabledFilters = parsertoList(disabledFilter);
         List<DateFilter> dateFilters = parsertoListDate(dateFilter);
 
         SortFieldDTO sort = new SortFieldDTO(sortField,Integer.parseInt(sortOrder));
-        return ResponseEntity.ok(this.manejadorConsultarBrand.ejecutar(page,searchText,sort,nameFilters,lockedFilters,
+        return ResponseEntity.ok(this.manejadorConsultarCategories.ejecutar(page,searchText,sort,nameFilters,lockedFilters,
                 disabledFilters,dateFilters));
     }
 

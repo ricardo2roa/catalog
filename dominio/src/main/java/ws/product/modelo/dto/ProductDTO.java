@@ -4,10 +4,8 @@ import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
-import ws.brand.modelo.dto.BrandDTO;
 import ws.information.modelo.dto.InformationDTO;
-import ws.product.modelo.entidad.Product;
-import ws.reference.modelo.dto.ReferenceDTO;
+
 import java.util.List;
 
 @Data

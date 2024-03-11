@@ -1,10 +1,11 @@
 package ws.brand.modelo.entidad;
 
-import ws.brand.modelo.dto.BrandDTO;
+import ws.brand.modelo.dto.BrandRead;
 
 import java.util.Date;
 
 public class Brand {
+    private String id;
     private int code;
     private String name;
     private Boolean locked;
@@ -27,6 +28,15 @@ public class Brand {
         this.dateCreated = dateCreated;
     }
 
+    private Brand(String id, int code, String name, Boolean locked, Boolean disabled, Date dateCreated) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.locked = locked;
+        this.disabled = disabled;
+        this.dateCreated = dateCreated;
+    }
+
     public static Brand crear(int code, String name, Boolean locked, Boolean disabled){
         return new Brand(code,name,locked,disabled);
     }
@@ -34,8 +44,8 @@ public class Brand {
         return new Brand(code,name,locked,disabled,dateCreated);
     }
 
-    public static Brand recrear(BrandDTO dto){
-        return new Brand(dto.getCode(),dto.getName(),dto.getLocked(),dto.getDisabled(),dto.getDateCreated());
+    public static Brand recrear(BrandRead dto){
+        return new Brand(dto.getId(),dto.getCode(),dto.getName(),dto.getLocked(),dto.getDisabled(),dto.getDateCreated());
     }
 
     public int getCode() {
@@ -56,5 +66,9 @@ public class Brand {
 
     public Date getDateCreated() {
         return dateCreated;
+    }
+
+    public String getId() {
+        return id;
     }
 }

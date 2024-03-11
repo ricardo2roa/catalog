@@ -11,7 +11,7 @@ public class ServicioUpdateBrand {
     public ServicioUpdateBrand(RepositorioBrand repositorioBrand) {
         this.repositorioBrand = repositorioBrand;
     }
-    public void ejecutar(List<SolicitudUpdateBrand> brands){
-        this.repositorioBrand.updateBrands(brands);
+    public void ejecutar(SolicitudUpdateBrand brand, String id){
+        this.repositorioBrand.updateBrand(brand, id);
     }
 }

@@ -1,4 +1,4 @@
-package ws.brand.modelo.dto;
+package ws.category.modelo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,8 +8,8 @@ import java.util.Date;
 
 @Getter
 @AllArgsConstructor
-@Document("brands")
-public class BrandDTO {
+@Document("categories")
+public class CategoryWrite {
     private int code;
     private String name;
     private Boolean locked;

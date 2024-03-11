@@ -4,7 +4,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
-import ws.brand.modelo.dto.BrandDTO;
 import ws.tag.modelo.dto.TagDTO;
 import ws.tag.modelo.entidad.Tag;
 import ws.tag.puerto.repositorio.RepositorioTag;

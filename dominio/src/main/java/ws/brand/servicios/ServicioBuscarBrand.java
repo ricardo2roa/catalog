@@ -1,6 +1,6 @@
 package ws.brand.servicios;
 
-import ws.brand.modelo.dto.BrandDTO;
+import ws.brand.modelo.dto.BrandRead;
 import ws.brand.puerto.repositorio.RepositorioBrand;
 
 import java.util.Map;
@@ -13,7 +13,7 @@ public class ServicioBuscarBrand {
         this.repositorioBrand = repositorioBrand;
     }
 
-    public Map<Integer, BrandDTO> getBrandFor(Set<Integer> brandList){
+    public Map<Integer, BrandRead> getBrandFor(Set<Integer> brandList){
         return this.repositorioBrand.obtenerListByCodes(brandList);
     }
 }

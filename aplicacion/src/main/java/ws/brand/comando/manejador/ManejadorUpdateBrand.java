@@ -15,9 +15,7 @@ public class ManejadorUpdateBrand {
         this.servicioUpdateBrand = servicioUpdateBrand;
         this.fabricaUpdateBrand = fabricaUpdateBrand;
     }
-    public void ejecutar(List<ComandoUpdateBrand> comandoBrands){
-        this.servicioUpdateBrand.ejecutar(comandoBrands.stream()
-                .map(this.fabricaUpdateBrand::crear).toList()
-        );
+    public void ejecutar(ComandoUpdateBrand comandoBrand, String id){
+        this.servicioUpdateBrand.ejecutar(this.fabricaUpdateBrand.crear(comandoBrand),id);
     }
 }

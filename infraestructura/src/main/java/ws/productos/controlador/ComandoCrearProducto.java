@@ -2,13 +2,12 @@ package ws.productos.controlador;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.boot.json.JsonParser;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ws.product.comando.ComandoProducto;
 import ws.product.comando.ComandoSolicitudCrearEnvio;
 import ws.product.comando.manejador.ManejadorCrearProductos;
-import ws.productos.adaptador.resolver.errorHTTP.exception.ErrorHTTPException;
+
 
 import java.util.HashMap;
 import java.util.List;

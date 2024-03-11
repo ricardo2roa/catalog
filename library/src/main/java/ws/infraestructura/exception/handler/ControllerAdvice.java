@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ws.domain.exception.modelo.*;
 import ws.infraestructura.error.modelo.ErrorDTO;
 import ws.infraestructura.error.modelo.ErrorDetalleDTO;
+import ws.infraestructura.exception.modelo.ErrorParserStringToDateException;
 
 @RestControllerAdvice
 public class ControllerAdvice {
@@ -39,5 +40,13 @@ public class ControllerAdvice {
         ErrorDetalleDTO error = ErrorDetalleDTO.builder().code("500").message(ex.getMessage()).build();
         return new ResponseEntity<>(ErrorDTO.builder().error(error).build(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(value = ErrorParserStringToDateException.class)
+    public ResponseEntity<ErrorDTO> ErrorParserStringToDateExceptionHandler(ErrorParserStringToDateException ex){
+        ErrorDetalleDTO error = ErrorDetalleDTO.builder().code("500").message(ex.getMessage()).build();
+        return new ResponseEntity<>(ErrorDTO.builder().error(error).build(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
 
 }

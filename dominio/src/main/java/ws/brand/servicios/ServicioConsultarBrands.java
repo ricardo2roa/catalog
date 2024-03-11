@@ -4,12 +4,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import ws.brand.modelo.entidad.Brand;
+import ws.brand.modelo.entidad.DateFilter;
 import ws.brand.puerto.repositorio.RepositorioBrand;
 import ws.sort.modelo.dto.SortFieldDTO;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class ServicioConsultarBrands {
     private final int PAGE_SIZE = 10;
@@ -18,12 +21,14 @@ public class ServicioConsultarBrands {
     public ServicioConsultarBrands(RepositorioBrand repositorioBrand) {
         this.repositorioBrand = repositorioBrand;
     }
-    public Page<Brand> ejecutar(int numberPage, Boolean disabled, Boolean locked, List<Integer> codes, String searchText, SortFieldDTO sort){
-        List<Brand> allBrands = this.repositorioBrand.obtenerTodasLasMarcas(numberPage, disabled, locked, codes, searchText);
+    public Page<Brand> ejecutar(int numberPage, String searchText, SortFieldDTO sort,
+                                List<String> nameFilters, List<String> lockedFilters, List<String> disabledFilters,
+                                List<DateFilter> dateFilters){
+        List<Brand> allBrands = this.repositorioBrand.obtenerTodasLasMarcas(numberPage, searchText, nameFilters, lockedFilters, disabledFilters, dateFilters);
 
         Comparator<Brand> comparator = null;
         if(sort.getField().equals("name")){
-            comparator = Comparator.comparing(Brand::getName);
+            comparator = Comparator.comparing(brand -> brand.getName().toLowerCase());
         }else if(sort.getField().equals("dateCreated")){
             comparator = Comparator.comparing(Brand::getDateCreated);
         } else if (sort.getField().equals("locked")) {
@@ -36,7 +41,9 @@ public class ServicioConsultarBrands {
             comparator = comparator.reversed();
         }
 
-        allBrands.sort(comparator);
+        if(comparator != null) {
+            allBrands = allBrands.stream().sorted(comparator).toList();
+        }
 
         var size = this.repositorioBrand.calcularCode() - 1;
         return new PageImpl<>(

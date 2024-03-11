@@ -1,15 +1,14 @@
-package ws.category.modelo.dto;
+package ws.category.comando;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
-
 @Getter
 @AllArgsConstructor
-@Document("categories")
-public class CategoryDTO {
+@NoArgsConstructor
+public class ComandoSolicitudUpdateCategory {
     private int code;
     private String name;
     private Boolean locked;

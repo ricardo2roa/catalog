@@ -36,7 +36,7 @@ public class Product {
     private List<Reference> fullreferences;
 
     private Product(String id, int code, Tag fullTag, Category fullCategory, Brand fullBrand,
-                   String name, Information information, List<Reference> references) {
+                    String name, Information information, List<Reference> references) {
         this.id = id;
         this.code = code;
         this.fullTag = fullTag;

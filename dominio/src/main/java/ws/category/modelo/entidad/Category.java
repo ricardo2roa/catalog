@@ -1,10 +1,12 @@
 package ws.category.modelo.entidad;
 
-import ws.category.modelo.dto.CategoryDTO;
+import ws.category.modelo.dto.CategoryRead;
+import ws.category.modelo.dto.CategoryWrite;
 
 import java.util.Date;
 
 public class Category {
+    private String id;
     private int code;
     private String name;
     private Boolean locked;
@@ -26,6 +28,15 @@ public class Category {
         this.disabled = disabled;
         this.dateCreated = dateCreated;
     }
+
+    private Category(String id, int code, String name,Boolean locked, Boolean disabled, Date dateCreated){
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.locked = locked;
+        this.disabled = disabled;
+        this.dateCreated = dateCreated;
+    }
     public static Category crear(SolicitudCrearCategory solicitudCrearCategory, int code){
         //Validar
         return new Category(code, solicitudCrearCategory.getName(), solicitudCrearCategory.getLocked(),
@@ -37,10 +48,10 @@ public class Category {
         return new Category(code, name, locked,disabled,dateCreated);
     }
 
-    public static Category recrear(CategoryDTO categoryDTO){
+    public static Category recrear(CategoryRead categoryRead){
         //Validar
-        return new Category(categoryDTO.getCode(), categoryDTO.getName(), categoryDTO.getLocked(),
-                categoryDTO.getDisabled(),categoryDTO.getDateCreated());
+        return new Category(categoryRead.getId(), categoryRead.getCode(), categoryRead.getName(), categoryRead.getLocked(),
+                categoryRead.getDisabled(),categoryRead.getDateCreated());
     }
     public int getCode() {
         return code;
@@ -60,5 +71,9 @@ public class Category {
 
     public Date getDateCreated() {
         return dateCreated;
+    }
+
+    public String getId() {
+        return id;
     }
 }
