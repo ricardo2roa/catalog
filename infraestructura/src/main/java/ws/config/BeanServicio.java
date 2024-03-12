@@ -99,4 +99,5 @@ public class BeanServicio {
     public ServicioUpdateCategory servicioUpdateCategory(RepositorioCategory repositorioCategory){
         return new ServicioUpdateCategory(repositorioCategory);
     }
+
 }

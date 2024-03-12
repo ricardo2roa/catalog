@@ -2,10 +2,12 @@ package ws.tag.modelo.entidad;
 
 import ws.brand.modelo.entidad.Brand;
 import ws.tag.modelo.dto.TagDTO;
+import ws.tag.modelo.dto.TagRead;
 
 import java.util.Date;
 
 public class Tag {
+    private String id;
     private int code;
     private String name;
     private Boolean locked;
@@ -27,6 +29,15 @@ public class Tag {
         this.disabled = disabled;
         this.dateCreated = dateCreated;
     }
+
+    private Tag(String id, int code, String name, Boolean locked, Boolean disabled,Date dateCreated){
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.locked = locked;
+        this.disabled = disabled;
+        this.dateCreated = dateCreated;
+    }
     public static Tag crear(int code, String name, Boolean locked, Boolean disabled){
         return new Tag(code,name,locked,disabled);
     }
@@ -35,8 +46,8 @@ public class Tag {
         return new Tag(code,name,locked,disabled,dateCreated);
     }
 
-    public static Tag recrear(TagDTO dto){
-        return new Tag(dto.getCode(),dto.getName(),dto.getLocked(),dto.getDisabled(),dto.getDateCreated());
+    public static Tag recrear(TagRead dto){
+        return new Tag(dto.getId(),dto.getCode(),dto.getName(),dto.getLocked(),dto.getDisabled(),dto.getDateCreated());
     }
     public int getCode() {
         return code;
@@ -56,5 +67,9 @@ public class Tag {
 
     public Date getDateCreated() {
         return dateCreated;
+    }
+
+    public String getId() {
+        return id;
     }
 }

@@ -14,7 +14,7 @@ public interface RepositorioBrand {
     Brand obtenerByCode(int code);
     Brand obtenerName(String name);
     int guardar(Brand brand);
-    Map<Integer, BrandRead> obtenerListByCodes(Set<Integer> brands);
+    //Map<Integer, BrandRead> obtenerListByCodes(Set<Integer> brands);
     Map<Integer, Brand> obtenerListValrep();
     List<Brand> obtenerTodasLasMarcas(int page, String searchText,List<String> nameFilters, List<String> lockedFilters,
                                       List<String> disabledFilters, List<DateFilter> dateFilters);
