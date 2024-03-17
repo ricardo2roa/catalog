@@ -6,7 +6,9 @@ import org.springframework.data.annotation.Transient;
 import ws.brand.modelo.entidad.Brand;
 import ws.category.modelo.entidad.Category;
 import ws.domain.exception.validador.ValidarDatos;
+import ws.information.modelo.dto.InformationDTO;
 import ws.information.modelo.entidad.Information;
+import ws.product.modelo.dto.ProductRead;
 import ws.reference.modelo.entidad.Reference;
 import ws.tag.modelo.entidad.Tag;
 
@@ -57,6 +59,18 @@ public class Product {
         this.information = information;
         this.references = references;
     }
+
+    public Product(String id, int code, int tag, int category, int brand, String name, InformationDTO information, List<String> references) {
+        this.id = id;
+        this.code = code;
+        this.tag = tag;
+        this.category = category;
+        this.brand = brand;
+        this.name = name;
+        this.information = Information.crear(information);
+        this.references = references;
+    }
+
     public static Product crear(SolicitudProducto solicitudProducto, int code, List<String> references){
         //Validadores
         ValidarDatos.siEsMayoraCero("codigo de producto",code);
@@ -75,6 +89,11 @@ public class Product {
                                   List<Reference> references) {
         //Validadores
         return new Product(id,code, tag, category, brand, name, information, references);
+    }
+
+    public static Product recrear(ProductRead productRead){
+        return new Product(productRead.getId(), productRead.getCode(), productRead.getTag(), productRead.getCategory(),productRead.getBrand(),
+        productRead.getName(),productRead.getInformation(),productRead.getReferences());
     }
 
     public static void validarCampos(SolicitudProducto solicitudProducto){

@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import ws.UploadFiles.config.PropiedadesAlmacenamiento;
 import ws.UploadFiles.servicios.ImageSystemStorageService;
 import ws.brand.puerto.repositorio.RepositorioBrand;
-import ws.brand.servicios.ServicioBuscarBrand;
 import ws.brand.servicios.ServicioConsultarBrands;
 import ws.brand.servicios.ServicioCrearBrand;
 import ws.brand.servicios.ServicioUpdateBrand;
@@ -22,6 +21,7 @@ import ws.reference.servicios.ServicioObtenerReferencia;
 import ws.tag.puerto.repositorio.RepositorioTag;
 import ws.tag.servicios.ServicioConsultarTag;
 import ws.tag.servicios.ServicioCrearTag;
+import ws.tag.servicios.ServicioUpdateTag;
 import ws.userSecurity.puerto.dao.UserDAO;
 import ws.userSecurity.servicios.ServicioBuscarUserById;
 
@@ -61,11 +61,6 @@ public class BeanServicio {
     }
 
     @Bean
-    public ServicioBuscarBrand servicioBuscarBrand(RepositorioBrand repositorioBrand){
-        return new ServicioBuscarBrand(repositorioBrand);
-    }
-
-    @Bean
     public ServicioConsultarCategory servicioConsultarCategory(RepositorioCategory repositorioCategory){
         return new ServicioConsultarCategory(repositorioCategory);
     }
@@ -98,6 +93,11 @@ public class BeanServicio {
     @Bean
     public ServicioUpdateCategory servicioUpdateCategory(RepositorioCategory repositorioCategory){
         return new ServicioUpdateCategory(repositorioCategory);
+    }
+
+    @Bean
+    public ServicioUpdateTag servicioUpdateTag(RepositorioTag repositorioTag){
+        return new ServicioUpdateTag(repositorioTag);
     }
 
 }

@@ -7,17 +7,21 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
+import ws.brand.modelo.dto.BrandRead;
+import ws.brand.modelo.entidad.Brand;
 import ws.information.modelo.dto.InformationDTO;
 import ws.product.modelo.dto.ProductDTO;
+import ws.product.modelo.dto.ProductRead;
 import ws.product.modelo.entidad.Product;
 import ws.product.puerto.repositorio.RepositorioProduct;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 @Log
 public class RepositorioProductMongo implements RepositorioProduct {
-
+    private final int SIZE_PAGE = 10;
     private final MongoTemplate mongoTemplate;
 
     public RepositorioProductMongo(MongoTemplate mongoTemplate) {
@@ -36,10 +40,50 @@ public class RepositorioProductMongo implements RepositorioProduct {
     }
 
     @Override
-    public List<Product> getProducts() {
-        Query query = new Query();
-        query.with(Sort.by(Sort.Order.asc("name")));
-        return this.mongoTemplate.find(query, Product.class,"products");
+    public List<Product> getProducts(int page, String searchText, List<String> tagFilters, List<String> categoryFilters, List<String> brandFilters) {
+        Criteria criteria = new Criteria();
+
+        List<Criteria> filters = new ArrayList<>();
+
+        Criteria tagCriteria = new Criteria();
+        Criteria categoryCriteria = new Criteria();
+        Criteria brandCriteria = new Criteria();
+        //Criteria datesCriteria = new Criteria();
+
+        if(!tagFilters.isEmpty()){
+            List<Criteria> filtersTag = new ArrayList<>(tagFilters.stream()
+                    .map(tag -> Criteria.where("tag")
+                            .is(Integer.valueOf(tag))).toList());
+            tagCriteria.orOperator(filtersTag);
+            filters.add(tagCriteria);
+        }
+        if(!categoryFilters.isEmpty()){
+            List<Criteria> filtersLocked = new ArrayList<>(categoryFilters.stream()
+                    .map(category -> Criteria.where("category")
+                            .is(Integer.valueOf(category))).toList());
+            categoryCriteria.orOperator(filtersLocked);
+            filters.add(categoryCriteria);
+        }
+        if(!brandFilters.isEmpty()){
+            List<Criteria> filtersDisabled = new ArrayList<>(brandFilters.stream()
+                    .map(brand -> Criteria.where("brand")
+                            .is(Integer.valueOf(brand))).toList());
+            brandCriteria.orOperator(filtersDisabled);
+            filters.add(brandCriteria);
+        }
+
+        if(!filters.isEmpty()) criteria.andOperator(filters);
+
+        if(!searchText.isEmpty()){
+            criteria.andOperator(Criteria.where("name").regex(searchText,"i"));
+        }
+        Query query = new Query(criteria);
+        var offset = ((long) page * SIZE_PAGE);
+        query.skip(offset);
+        query.limit(SIZE_PAGE);
+
+        return this.mongoTemplate.find(query, ProductRead.class).stream()
+                .map(Product::recrear).toList();
     }
 
     @Override
@@ -58,7 +102,7 @@ public class RepositorioProductMongo implements RepositorioProduct {
     }
 
     @Override
-    public ProductDTO updateProduct(Product product) {
+    public Product updateProduct(Product product) {
         Criteria criteria = Criteria.where("_id").is(product.getId());
         Query query = new Query(criteria);
         Update update = new Update();
@@ -71,7 +115,8 @@ public class RepositorioProductMongo implements RepositorioProduct {
                 product.getInformation().getFeature(),
                 product.getInformation().getDescription()));
         update.set("references",product.getReferences());
-        return this.mongoTemplate.findAndModify(query,update, ProductDTO.class, "products");
+        ProductRead response = this.mongoTemplate.findAndModify(query,update, ProductRead.class);
+        return Product.recrear(response);
     }
 
 }
