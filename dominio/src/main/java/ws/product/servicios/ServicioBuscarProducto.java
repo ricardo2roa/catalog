@@ -94,7 +94,18 @@ public class ServicioBuscarProducto {
     }
 
     public Product buscarProduct(String id){
-        return this.repositorioProduct.getProduct(id);
+
+         Product product = this.repositorioProduct.getProduct(id);
+
+         Category category = this.repositorioCategory.obtenerByCode(product.getCategory());
+         Brand brand = this.repositorioBrand.obtenerByCode(product.getBrand());
+         Tag tag = this.repositorioTag.obtenerByCode(product.getTag());
+         List<Reference> references = product.getReferences().stream().map(reference->this.repositorioReference.buscarPorId(reference)).toList();
+
+         return Product.recrear(product.getId(),product.getCode(),tag,category,brand,
+                    product.getName(), product.getInformation(),
+                    references);
+
     }
     public int count(){
         return (this.repositorioProduct.calcularCode() - 1);

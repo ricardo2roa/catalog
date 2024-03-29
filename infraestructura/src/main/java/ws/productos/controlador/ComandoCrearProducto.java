@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ws.product.comando.ComandoProducto;
-import ws.product.comando.ComandoSolicitudCrearEnvio;
+import ws.product.comando.ComandoSolicitudCrearProducto;
 import ws.product.comando.manejador.ManejadorCrearProductos;
 
 
@@ -28,7 +28,7 @@ public class ComandoCrearProducto {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             var producto = objectMapper.readValue(json,ComandoProducto.class);
-            String id = this.manejadorCrearProductos.ejecutar(new ComandoSolicitudCrearEnvio(producto,files));
+            String id = this.manejadorCrearProductos.ejecutar(new ComandoSolicitudCrearProducto(producto,files));
             Map<String,String> response = new HashMap<>();
             response.put("id",id);
             return response;

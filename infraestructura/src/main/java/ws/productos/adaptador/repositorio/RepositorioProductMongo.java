@@ -1,18 +1,20 @@
 package ws.productos.adaptador.repositorio;
 
 import lombok.extern.java.Log;
+import org.bson.types.ObjectId;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import ws.brand.modelo.dto.BrandRead;
-import ws.brand.modelo.entidad.Brand;
 import ws.information.modelo.dto.InformationDTO;
 import ws.product.modelo.dto.ProductDTO;
 import ws.product.modelo.dto.ProductRead;
+import ws.product.modelo.dto.ProductWrite;
 import ws.product.modelo.entidad.Product;
+import ws.product.modelo.entidad.SolicitudUpdateProduct;
 import ws.product.puerto.repositorio.RepositorioProduct;
 
 import java.util.ArrayList;
@@ -30,8 +32,10 @@ public class RepositorioProductMongo implements RepositorioProduct {
 
     @Override
     public String guardar(Product product) {
-        Product productSave = this.mongoTemplate.save(product,"products");
-        return productSave.getId();
+        ProductWrite productSave = this.mongoTemplate.save(new ProductWrite(product.getCode(), product.getTag(),product.getCategory(),
+        product.getBrand(),product.getName(),new InformationDTO(product.getInformation().getBenefits(),
+                product.getInformation().getFeature(),product.getInformation().getDescription()),product.getReferences()));
+        return String.valueOf(productSave.getCode());
     }
 
     @Override
@@ -96,27 +100,26 @@ public class RepositorioProductMongo implements RepositorioProduct {
 
     @Override
     public Product getProduct(String id) {
-        Criteria criteria = Criteria.where("id").is(id);
+        Criteria criteria = Criteria.where("_id").is(id);
         Query query = new Query(criteria);
-        return this.mongoTemplate.findOne(query,Product.class,"products");
+        ProductWrite response = this.mongoTemplate.findOne(query, ProductWrite.class);
+        return Product.recrear(response,id);
     }
 
     @Override
-    public Product updateProduct(Product product) {
-        Criteria criteria = Criteria.where("_id").is(product.getId());
+    public String updateProduct(SolicitudUpdateProduct product, String id) {
+        Criteria criteria = Criteria.where("_id").is(new ObjectId(id));
         Query query = new Query(criteria);
         Update update = new Update();
-        update.set("tag",product.getTag());
-        update.set("category",product.getCategory());
-        update.set("brand",product.getBrand());
+
         update.set("name",product.getName());
         update.set("information",new InformationDTO(
                 product.getInformation().getBenefits(),
                 product.getInformation().getFeature(),
                 product.getInformation().getDescription()));
-        update.set("references",product.getReferences());
+
         ProductRead response = this.mongoTemplate.findAndModify(query,update, ProductRead.class);
-        return Product.recrear(response);
+        return response.getId();
     }
 
 }

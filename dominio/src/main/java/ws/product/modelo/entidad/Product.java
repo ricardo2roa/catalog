@@ -8,7 +8,9 @@ import ws.category.modelo.entidad.Category;
 import ws.domain.exception.validador.ValidarDatos;
 import ws.information.modelo.dto.InformationDTO;
 import ws.information.modelo.entidad.Information;
+import ws.product.modelo.dto.ProductDTO;
 import ws.product.modelo.dto.ProductRead;
+import ws.product.modelo.dto.ProductWrite;
 import ws.reference.modelo.entidad.Reference;
 import ws.tag.modelo.entidad.Tag;
 
@@ -91,9 +93,14 @@ public class Product {
         return new Product(id,code, tag, category, brand, name, information, references);
     }
 
-    public static Product recrear(ProductRead productRead){
-        return new Product(productRead.getId(), productRead.getCode(), productRead.getTag(), productRead.getCategory(),productRead.getBrand(),
-        productRead.getName(),productRead.getInformation(),productRead.getReferences());
+    public static Product recrear(ProductRead product){
+        return new Product(product.getId(), product.getCode(), product.getTag(), product.getCategory(),product.getBrand(),
+                product.getName(),product.getInformation(),product.getReferences());
+    }
+
+    public static Product recrear(ProductWrite product,String id){
+        return new Product(id, product.getCode(), product.getTag(), product.getCategory(),product.getBrand(),
+                product.getName(),product.getInformation(),product.getReferences());
     }
 
     public static void validarCampos(SolicitudProducto solicitudProducto){
@@ -152,8 +159,20 @@ public class Product {
     }
 
 
-    private static String generarSKU(String brand, String name,
+    public static String generarSKU(String brand, String name,
                                      int code, SolicitudReferencia reference){
+        String pesoNormalizado = Long.toString((reference.getPeso()/FACTOR_NORMALIZAR_PESO)).replaceAll("\\s", "").toUpperCase();
+        String codeString = Integer.toString(code).replaceAll("\\s", "").toUpperCase();
+        StringBuilder skuBuilder = new StringBuilder();
+        skuBuilder.append(name.replaceAll("\\s", "").toUpperCase(), 0, Math.min(name.length(), MAXIMO_TAMANO_SECCION_SKU)).append("-")
+                .append(brand.replaceAll("\\s", "").toUpperCase(),0,Math.min(brand.length(),MAXIMO_TAMANO_SECCION_SKU)).append("-");
+        skuBuilder.append(pesoNormalizado,0,Math.min(pesoNormalizado.length(),MAXIMO_TAMANO_SECCION_SKU));
+        skuBuilder.append("-").append(codeString, 0, Math.min(codeString.length(),MAXIMO_TAMANO_SECCION_SKU));
+        return skuBuilder.toString();
+    }
+
+    public static String generarSKUReference(String brand, String name,
+                                    int code, Reference reference){
         String pesoNormalizado = Long.toString((reference.getPeso()/FACTOR_NORMALIZAR_PESO)).replaceAll("\\s", "").toUpperCase();
         String codeString = Integer.toString(code).replaceAll("\\s", "").toUpperCase();
         StringBuilder skuBuilder = new StringBuilder();

@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ws.UploadFiles.config.PropiedadesAlmacenamiento;
 import ws.UploadFiles.servicios.ImageSystemStorageService;
+import ws.UploadFiles.servicios.ServicioActualizarImagenReferencia;
 import ws.brand.puerto.repositorio.RepositorioBrand;
 import ws.brand.servicios.ServicioConsultarBrands;
 import ws.brand.servicios.ServicioCrearBrand;
@@ -15,6 +16,7 @@ import ws.category.servicios.ServicioUpdateCategory;
 import ws.product.puerto.repositorio.RepositorioProduct;
 import ws.product.servicios.ServicioBuscarProducto;
 import ws.product.servicios.ServicioCrearProducto;
+import ws.product.servicios.ServiciosUpdateProduct;
 import ws.reference.puerto.repositorio.RepositorioImageReference;
 import ws.reference.puerto.repositorio.RepositorioReference;
 import ws.reference.servicios.ServicioObtenerReferencia;
@@ -100,4 +102,15 @@ public class BeanServicio {
         return new ServicioUpdateTag(repositorioTag);
     }
 
+    @Bean
+    public ServiciosUpdateProduct serviciosUpdateProduct(RepositorioProduct repositorioProduct){
+        return new ServiciosUpdateProduct(repositorioProduct);
+    }
+
+    @Bean
+    public ServicioActualizarImagenReferencia servicioActualizarImagenReferencia(RepositorioReference repositorioReference,
+                                                                                 ImageSystemStorageService imageSystemStorageService,
+                                                                                 RepositorioImageReference repositorioImageReference){
+        return new ServicioActualizarImagenReferencia(repositorioReference,imageSystemStorageService,repositorioImageReference);
+    }
 }

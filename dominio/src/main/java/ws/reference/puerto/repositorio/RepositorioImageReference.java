@@ -6,4 +6,6 @@ import ws.reference.modelo.entidad.ImageReferenceInfo;
 
 public interface RepositorioImageReference {
     String registrarImagen(ImageReferenceInfo imageReferenceInfo);
+    String obtenerNameByIdReference(String id);
+    ImageReferenceInfo obtenerImagenInfoByIdReference(String id);
 }

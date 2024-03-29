@@ -1,6 +1,7 @@
 package ws.product.puerto.repositorio;
 
 import ws.product.modelo.entidad.Product;
+import ws.product.modelo.entidad.SolicitudUpdateProduct;
 
 import java.util.List;
 
@@ -10,6 +11,5 @@ public interface RepositorioProduct{
     List<Product> getProducts(int page, String searchText, List<String> tagFilters, List<String> categoryFilters, List<String> brandFilters);
     List<Product> getProducts(String id);
     Product getProduct(String id);
-    Product updateProduct(Product product);
-
+    String updateProduct(SolicitudUpdateProduct product, String id);
 }

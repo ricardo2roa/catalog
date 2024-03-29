@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 @Getter
 @AllArgsConstructor
-public class ComandoSolicitudCrearEnvio {
+public class ComandoSolicitudCrearProducto {
     private ComandoProducto producto;
     private List<MultipartFile> multipartFiles;
 }

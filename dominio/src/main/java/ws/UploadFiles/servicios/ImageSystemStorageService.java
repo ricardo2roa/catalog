@@ -72,6 +72,30 @@ public class ImageSystemStorageService {
             throw new FileStorageException(("No se puede leer el archivo: "+filename),e);
         }
     }
+
+    public void delete(String filename, String name){
+        try{
+            /*if(file.isEmpty()){
+                throw new FileRequestException("Error el archivo que intenta guardar se encuentra vacio");
+            }*/
+            String nameFile = cambiarNombre(filename,name);
+            Path destinoArchivo = this.directorioRaiz.resolve(
+                            Paths.get(nameFile))
+                    .normalize().toAbsolutePath();
+
+            /*log.info("directorio "+destinoArchivo);
+            log.info("Path directorio "+destinoArchivo.toAbsolutePath());*/
+
+            if(!destinoArchivo.getParent().equals(this.directorioRaiz.toAbsolutePath())){
+                //Cambiar por nueva excepcion
+                throw new StorageException("No se puede eliminar por que esta fuera del directorio");
+            }
+            Files.deleteIfExists(destinoArchivo);
+        }catch (IOException e) {
+            throw new StorageException("Error al eliminar el archivo",e);
+        }
+    }
+
     private static String cambiarNombre(String nameFile, String rename){
         var ext = nameFile.substring(nameFile.lastIndexOf("."));
         //Comprobación de extension

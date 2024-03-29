@@ -10,4 +10,5 @@ public interface RepositorioReference {
 
     String guardar(ReferenceDTO reference);
 
+    String obtenerInfoParaSKUByIdReferencia(Reference reference);
 }

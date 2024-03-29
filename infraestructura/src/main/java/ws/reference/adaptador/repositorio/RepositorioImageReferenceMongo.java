@@ -27,9 +27,11 @@ public class RepositorioImageReferenceMongo implements RepositorioImageReference
                 imageReferenceInfo.getId(),imageReferenceInfo.getIdReference(),
                 imageReferenceInfo.getName(), imageReferenceInfo.getDateModify());
 
-        Criteria criteria = Criteria.where("_id")
-                .is(imageReferenceDto.getId())
-                .and("idReference").is(imageReferenceDto.getIdReference());
+        Criteria criteria = Criteria.where("idReference")
+                .is(imageReferenceDto.getIdReference());
+                        /*("_id")
+                .is(imageReferenceDto.getId())*/
+                //.and("idReference").is(imageReferenceDto.getIdReference());
         Query query = new Query(criteria);
         Update update = new Update();
         update.set("name",imageReferenceDto.getName());
@@ -39,4 +41,19 @@ public class RepositorioImageReferenceMongo implements RepositorioImageReference
         return imageReference.getName();
     }
 
+    @Override
+    public String obtenerNameByIdReference(String id) {
+        Criteria criteria = Criteria.where("idReference").is(id);
+        Query query = new Query(criteria);
+        ImageReferenceInfoDTO response = this.mongoTemplate.findOne(query,ImageReferenceInfoDTO.class);
+        return response.getName();
+    }
+
+    @Override
+    public ImageReferenceInfo obtenerImagenInfoByIdReference(String id) {
+        Criteria criteria = Criteria.where("idReference").is(id);
+        Query query = new Query(criteria);
+        ImageReferenceInfoDTO response = this.mongoTemplate.findOne(query,ImageReferenceInfoDTO.class);
+        return ImageReferenceInfo.recrear(response);
+    }
 }

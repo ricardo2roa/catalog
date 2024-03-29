@@ -27,6 +27,10 @@ public class ImageReferenceInfo {
         return new ImageReferenceInfo(name,idReference);
     }
 
+    public static ImageReferenceInfo recrear(ImageReferenceInfoDTO image) {
+        return new ImageReferenceInfo(image.getId(), image.getName(), image.getIdReference(), image.getDateModify());
+    }
+
     public String getId() {
         return id;
     }
